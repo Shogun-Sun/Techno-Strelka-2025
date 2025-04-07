@@ -12,6 +12,6 @@
 
 .bef_aft{
     @apply relative 
-    before:absolute before:top-0 before:h-px before:w-[200vw] before:bg-(--pattern-fg) before:-left-[100vw] before:z-10 before:hidden sm:before:block
-    after:absolute  after:bottom-0 after:h-px  after:w-[200vw]  after:bg-(--pattern-fg)     after:-left-[100vw]  after:z-10 after:hidden sm:after:block;
+    before:absolute before:top-0   before:h-px before:w-[200vw] before:bg-(--pattern-fg) before:-left-[100vw] before:z-10 before:hidden sm:before:block
+    after:absolute  after:bottom-0 after:h-px  after:w-[200vw]  after:bg-(--pattern-fg)  after:-left-[100vw]  after:z-10  after:hidden sm:after:block;
 }
