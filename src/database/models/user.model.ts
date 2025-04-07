@@ -7,7 +7,9 @@ import {
   AutoIncrement,
   PrimaryKey,
   AllowNull,
+  HasMany,
 } from 'sequelize-typescript';
+import { Session } from './session.model';
 
 @Table({ tableName: 'users', timestamps: false })
 export class User extends Model {
@@ -27,4 +29,7 @@ export class User extends Model {
   @AllowNull(false)
   @Column(DataType.STRING)
   declare user_email: string;
+
+  @HasMany(() => Session)
+  declare sessions: Session[];
 }

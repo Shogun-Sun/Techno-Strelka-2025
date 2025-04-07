@@ -1,11 +1,42 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { SessionModule } from './session/session.module';
 import { DatabaseModule } from './database/database.module';
+import { SessionService } from './session/session.service';
+import { SESSION_SECRET } from './config';
+import { SequelizeStore } from './session/sequelize-store';
+import * as session from 'express-session';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Session } from './database/models/session.model';
 
 @Module({
-  imports: [UserModule, SessionModule, DatabaseModule],
+  imports: [
+    SequelizeModule.forFeature([Session]),
+    UserModule,
+    SessionModule,
+    DatabaseModule,
+  ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  constructor(private sessionService: SessionService) {}
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        session({
+          store: new SequelizeStore(this.sessionService),
+          secret: SESSION_SECRET || 'secret',
+          resave: false,
+          saveUninitialized: false,
+          cookie: {
+            secure: false,
+            httpOnly: false,
+            maxAge: 1000 * 60 * 60 * 24,
+          },
+        }),
+      )
+      .forRoutes('*');
+  }
+}
