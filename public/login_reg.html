@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Регистрация</title>
+    <link rel="stylesheet" href="./css/out.css">
+</head>
+<body class="duration-500 transition-all scroll-smooth">
+    <nav class="w-full flex justify-center md:justify-center items-center pt-2 px-2 fixed z-[41] group/nav duration-500">
+
+        <div id="main_icon" class="w-32 md:w-36 lg:bg-white top-[7px] lg:top-[8px] left-3 md:left-5 rounded-3xl fixed z-[41] flex items-center justify-between h-[39px] lg:w-40 px-3 lg:dark:bg-gray-950
+          dark:text-white lg:border lg:dark:border-slate-600 lg:border-slate-300" >
+            <svg class="h-5 w-6 md:h-6 md:w-7 stroke-1 fill-yellow-400 group-hover/nav:fill-white lg:group-hover/nav:fill-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path d="M512 96c0 50.2-59.1 125.1-84.6 155c-3.8 4.4-9.4 6.1-14.5 5L320 256c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c53 0 96 43 96 96s-43 96-96 96l-276.4 0c8.7-9.9 19.3-22.6 30-36.8c6.3-8.4 12.8-17.6 19-27.2L416 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0c-53 0-96-43-96-96s43-96 96-96l39.8 0c-21-31.5-39.8-67.7-39.8-96c0-53 43-96 96-96s96 43 96 96zM117.1 489.1c-3.8 4.3-7.2 8.1-10.1 11.3l-1.8 2-.2-.2c-6 4.6-14.6 4-20-1.8C59.8 473 0 402.5 0 352c0-53 43-96 96-96s96 43 96 96c0 30-21.1 67-43.5 97.9c-10.7 14.7-21.7 28-30.8 38.5l-.6 .7zM128 352a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM416 128a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/>
+            </svg>
+            <p class="text-base text-slate-900 font-semibold pt-1 dark:text-yellow-400 group-hover/nav:text-white  md:text-xl md:pt-0 lg:group-hover/nav:text-slate-900 lg:group-hover/nav:dark:text-yellow-500">TOUROU</p>
+        </div> 
+
+        <div class="lg:bg-white w-12 h-10 top-[7px]  lg:top-[10px] right-5 rounded-3xl fixed z-[41] flex items-center justify-center
+            lg:dark:bg-gray-950 lg:border lg:dark:border-slate-600 lg:border-slate-300">
+            <button type="button" id="theme-toggle" >
+                    <span class="dark:hidden">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
+                            <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" class="fill-none stroke-yellow-500 group-hover/nav:stroke-white lg:group-hover/nav:stroke-yellow-500"></path>
+                            <path d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836" class="stroke-yellow-500 group-hover/nav:stroke-white lg:group-hover/nav:stroke-yellow-500"></path>
+                        </svg>
+                    </span>
+                    <span class="hidden dark:inline">
+                        <svg viewBox="0 0 24 24" fill="none" class="w-8 h-8">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.715 15.15A6.5 6.5 0 0 1 9 6.035C6.106 6.922 4 9.645 4 12.867c0 3.94 3.153 7.136 7.042 7.136 3.101 0 5.734-2.032 6.673-4.853Z" class="fill-sky-500/20"></path>
+                            <path d="m17.715 15.15.95.316a1 1 0 0 0-1.445-1.185l.495.869ZM9 6.035l.846.534a1 1 0 0 0-1.14-1.49L9 6.035Zm8.221 8.246a5.47 5.47 0 0 1-2.72.718v2a7.47 7.47 0 0 0 3.71-.98l-.99-1.738Zm-2.72.718A5.5 5.5 0 0 1 9 9.5H7a7.5 7.5 0 0 0 7.5 7.5v-2ZM9 9.5c0-1.079.31-2.082.845-2.93L8.153 5.5A7.47 7.47 0 0 0 7 9.5h2Zm-4 3.368C5 10.089 6.815 7.75 9.292 6.99L8.706 5.08C5.397 6.094 3 9.201 3 12.867h2Zm6.042 6.136C7.718 19.003 5 16.268 5 12.867H3c0 4.48 3.588 8.136 8.042 8.136v-2Zm5.725-4.17c-.81 2.433-3.074 4.17-5.725 4.17v2c3.552 0 6.553-2.327 7.622-5.537l-1.897-.632Z" class="fill-sky-500"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17 3a1 1 0 0 1 1 1 2 2 0 0 0 2 2 1 1 0 1 1 0 2 2 2 0 0 0-2 2 1 1 0 1 1-2 0 2 2 0 0 0-2-2 1 1 0 1 1 0-2 2 2 0 0 0 2-2 1 1 0 0 1 1-1Z" class="fill-sky-500"></path>
+                        </svg>
+                    </span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="min-h-screen absolute w-full">
+        <div class="min-h-screen [--pattern-fg:var(--color-gray-950)]/10 dark:bg-gray-950 dark:[--pattern-fg:var(--color-white)]/20
+         flex justify-center items-center duration-500 p-4 sm:p-0 overflow-x-hidden">
+            <div id="left" class=" h-screen border-x border-x-(--pattern-fg) hidden sm:flex sm:w-6 md:w-8 lg:w-10
+             bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px]"></div> 
+
+            <div class="w-[500px] h-[500px] dark:bg-gray-900 p-2 bg-gray-200/50 duration-500 rounded-10 sm:rounded-none shadow-lg shadow-gray-800 sm:shadow-none bef_aft">
+
+                <div class="h-full w-full  dark:bg-gray-950 rounded-10 relative flex flex-col items-center justify-around p-4 bg-white duration-500">
+                    <!-- <div id="top" class="absolute -top-2 h-px w-screen bg-(--pattern-fg)  left-1/2 transform -translate-x-1/2 hidden sm:block"></div>
+                    <div id="bottom" class="absolute -bottom-2 h-px w-screen bg-(--pattern-fg)  left-1/2 transform -translate-x-1/2 hidden sm:block"></div> -->
+
+                    <div id="form_header" class="">
+                        <div id="main_icon" class=" flex justify-center">
+                            <svg class="h-20 w-20 stroke-2 fill-yellow-400 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path d="M512 96c0 50.2-59.1 125.1-84.6 155c-3.8 4.4-9.4 6.1-14.5 5L320 256c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c53 0 96 43 96 96s-43 96-96 96l-276.4 0c8.7-9.9 19.3-22.6 30-36.8c6.3-8.4 12.8-17.6 19-27.2L416 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0c-53 0-96-43-96-96s43-96 96-96l39.8 0c-21-31.5-39.8-67.7-39.8-96c0-53 43-96 96-96s96 43 96 96zM117.1 489.1c-3.8 4.3-7.2 8.1-10.1 11.3l-1.8 2-.2-.2c-6 4.6-14.6 4-20-1.8C59.8 473 0 402.5 0 352c0-53 43-96 96-96s96 43 96 96c0 30-21.1 67-43.5 97.9c-10.7 14.7-21.7 28-30.8 38.5l-.6 .7zM128 352a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM416 128a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/>
+                            </svg>
+                        </div>
+                        <h1 class="text-xl  text-center font-semibold text-slate-900 md:text-3xl dark:text-gray-200">
+                            Войти в личный кабинет
+                        </h1>
+                    </div>
+                    <div id="form_body" class="py-3 px-5 h-52 md:h-60 flex flex-col justify-around w-10/12">
+                        <div class="flex flex-col justify-around md:justify-between">
+                            <label for="login" class="text-lg mb-2 text-slate-900 md:mb-3 md:text-xl dark:text-gray-300">Login</label>
+                            <input id="login" type ="email" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 focus:border-yellow-500
+                            focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 outline-none
+                            invalid:border-pink-700 invalid:text-pink-700">
+                        </div>
+                        <div class="flex flex-col justify-around md:justify-between">
+                            <label for="password" class="text-lg mb-2 text-slate-900 md:mb-3 md:text-xl dark:text-gray-300">Password</label>
+                            <input id="password" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 focus:border-yellow-500
+                            focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 outline-none">
+                        </div>
+                    </div>
+                    <div id="form_footer" class="h-20 flex flex-col items-center justify-between px-5 w-10/12">
+                        <div>
+                            <p class="text-base text-gray-400 text-center mb-2 sm:mb-0">if you don't have an account 
+                                <a id="openModal" class=" underline decoration-1 decoration-yellow-500 text-yellow-500 cursor-pointer">register</a>
+                            </p>
+                        </div>
+                        <button id="login_btn" class="text-lg h-8 w-full rounded-10 bg-yellow-500 text-slate-900 md:text-xl md:h-10 md:py-2 hover:bg-yellow-400 
+                        transform transition-all hover:scale-105 duration-500 flex items-center justify-center">
+                            Войти
+                        </button>
+                    </div>
+                </div>              
+            </div>
+            <div id="right" class=" h-screen border-x border-x-(--pattern-fg) hidden sm:flex sm:w-6 md:w-8 lg:w-10
+             bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px]"></div>
+        </div>
+
+
+        <div id="modal" class="fixed inset-0 dark:bg-slate-950/1 bg-white/1 backdrop-blur-sm items-center justify-center opacity-0 hidden
+        duration-500 p-4 sm:p-0 transition-all">
+            
+            <div id="mainModal" class="bg-white rounded-10 shadow-2xl px-6 py-4 transform transition-transform duration-500 flex flex-col justify-between
+             dark:bg-gray-950 border dark:border-slate-600 border-transparent w-full sm:w-9/12 md:w-7/12 lg:w-1/2 xl:w-1/3 gap-2 md:gap-5">
+
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-center pl-3 dark:text-white">Регистрация</h2>
+                    <button id="closeModal" class="border-2 border-white dark:border-gray-950 rounded-10 hover:border-2 hover:border-yellow-500">
+                         <svg class="w-[25px] h-[25px] fill-red-500 stroke-yellow-500 stroke-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M6 18 17.94 6M18 18 6.06 6"/>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Контент -->
+                <div class="px-5 flex flex-col justify-around gap-2 sm:gap-5">
+                    <div class="h-20 flex flex-col justify-around">
+                        <label for="email" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Email</label>
+                        <input id="email" type="email" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                         focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                    </div>
+                    <div class="h-20 flex flex-col justify-around">
+                        <label for="Surname" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Фамилия</label>
+                        <input id="Surname" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                         focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                    </div>
+                    <div class="h-20 flex flex-col justify-around">
+                        <label for="Name" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Имя</label>
+                        <input id="Name" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                         focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                    </div>
+                    <div class="h-20 flex flex-col justify-around">
+                        <label for="Patronimyc" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Отчество</label>
+                        <input id="Patronimyc" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                         focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                    </div>
+                    <div class="h-20 flex flex-col justify-around">
+                        <label for="reg_password" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Пароль</label>
+                        <input id="reg_password" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                         focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                    </div>
+                    <div class="h-20 flex flex-col justify-around">
+                        <label for="reg_password_2" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Подтвердите пароль</label>
+                        <input id="reg_password_2" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                         focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                    </div>
+                </div>
+
+                <!-- Кнопки -->
+                <div class="flex justify-between space-x-4 p-2">
+                    <button id="cancelButton" class="basis-1/2 rounded-10 bg-gray-200/50 dark:bg-gray-900 text-yellow-400 hover:bg-gray-100
+                     dark:hover:bg-gray-800 hover:scale-105 transform transiton-all duration-500 px-2 py-1 sm:text-lg md:text-xl">
+                        Отмена
+                    </button>
+                    <button id="reg_btn" class="basis-1/2 rounded-10 bg-yellow-500 text-slate-900 hover:bg-yellow-400 hover:scale-105 transform
+                     transiton-all duration-500 px-2 py-1 sm:text-lg md:text-xl">
+                        Зарегестрироваться
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="./js/darkmode.js"></script>
+    <script src="./js/modal.js">
+        
+    </script>
+</body>
+</html>
