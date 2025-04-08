@@ -33,7 +33,7 @@ export class UserController {
     @Body() loginUserDto: LoginUserDto,
   ) {
     const user = await this.userService.validateUser(
-      loginUserDto.user_email,
+      loginUserDto.user_telephone,
       loginUserDto.user_password,
     );
 
@@ -44,7 +44,8 @@ export class UserController {
     session.user = {
       user_id: user.user_id,
       user_name: user.user_name,
-      user_email: user.user_email,
+      user_email: user.user_telephone,
+      user_role: user.user_role,
     };
 
     return { message: 'Вы успешно авторизовались', user: session.user };

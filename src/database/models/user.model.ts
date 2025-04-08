@@ -29,7 +29,7 @@ export class User extends Model {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  declare user_email: string;
+  declare user_telephone: string;
 
   @Default('user')
   @AllowNull(false)

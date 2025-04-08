@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
+import { IsNotEmpty, IsString, IsPhoneNumber } from 'class-validator';
 
 export class NewUserDto {
   @ApiProperty({
@@ -19,10 +19,10 @@ export class NewUserDto {
   user_password: string;
 
   @ApiProperty({
-    example: '@gmail.com',
-    description: 'Почта пользователя',
+    example: '+79871237483',
+    description: 'Телефон пользователя',
   })
-  @IsEmail({}, { message: 'Некорректный email' })
+  @IsPhoneNumber('RU', { message: 'Некорректный номер телефона' })
   @IsNotEmpty()
-  user_email: string;
+  user_telephone: string;
 }

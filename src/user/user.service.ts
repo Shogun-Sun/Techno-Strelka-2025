@@ -15,7 +15,7 @@ export class UserService {
     try {
       const user = await this.userModel.findOne({
         where: {
-          user_email: newUserDto.user_email,
+          user_telephone: newUserDto.user_telephone,
         },
       });
 
@@ -32,10 +32,10 @@ export class UserService {
   }
 
   async validateUser(
-    user_email: string,
+    user_telephone: string,
     user_password: string,
   ): Promise<User | null> {
-    const user = await this.userModel.findOne({ where: { user_email } });
+    const user = await this.userModel.findOne({ where: { user_telephone } });
     if (!user) {
       throw new BadRequestException('Пользователь не найден');
     }
