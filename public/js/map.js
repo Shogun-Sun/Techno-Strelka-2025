@@ -4,6 +4,9 @@ let map;
 let userLocation = null; // Изначально null
 let userPlacemark = null;
 
+const balloonContent_template = document.getElementById("balloonContent_template").innerHTML;
+window.balloonContent_template = Handlebars.compile(balloonContent_template);
+
 const coverage = document.getElementById('coverage');
 const reviews = document.getElementById('reviews');
 
@@ -48,7 +51,6 @@ function init() {
             addSelfpoint()
         }
     })
-    console.log(reviews.checked)
 
     reviews.addEventListener("change", () => {
         if (reviews.checked) {
@@ -69,14 +71,8 @@ function init() {
         .then(reviewsData => {
             reviewsData.data.forEach(review => {
                 let reviewPlacemark = new ymaps.Placemark([review.coordinates.lat, review.coordinates.lng], {
-                    hintContent: 'Комментарий пользователя',
-                    balloonContent: `
-                        <div class="p-2 overflow-y-scroll h-auto ">
-                            <h3 class="font-bold mb-1">Отзыв</h3>
-                            <p class="mb-2">${review.review_text}</p>
-                            <p class="text-sm text-gray-600">Телефон: ${user_telephone}</p>
-                        </div>
-                    `
+                    hintContent: `Комментарий пользователя ${user_telephone}`,
+                    balloonContent: window.balloonContent_template(review)
                 }, {
                     iconLayout: 'default#image',
                     iconImageHref: '/pictures/mobile-map.png',
@@ -86,6 +82,10 @@ function init() {
             }); 
         })
     }
+
+    document.getElementById('reviews').click()
+    addSelfpoint();
+    getReviews();
 }
 
 
@@ -258,7 +258,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             user_telephone = null
             return;
         }
+        document.getElementById("login").innerText = "Выйти"
+        document.getElementById("login").onclick = () => {
+            fetch("/user/logout", {
+                method:"Get",
+                headers:{
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(res=> res.json())
+            .then((userOutMessage) => {
+                document.getElementById("login").innerText = "Войти"
+                document.getElementById("login").onclick = () => {window.location.href = "/loginPage"}
+                alert(userOutMessage.message)
+            })
+        }
         user_id = userData.user.user_id;
         user_telephone = userData.user.user_telephone;
         document.querySelector("#phoneNumberComment").innerHTML = user_telephone;
+
 })
