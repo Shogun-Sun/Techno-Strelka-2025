@@ -46,10 +46,9 @@ function init() {
             console.log(review)
             let reviewPlacemark = new ymaps.Placemark([review.coordinates.lat, review.coordinates.lng], {
                 balloonContent: `
-                    <div class="p-2 overflow-y-scroll h-auto ">
-                        <h3 class="font-bold mb-1">Отзыв</h3>
-                        <p class="mb-2">${review.review_text}</p>
-                        <p class="text-sm text-gray-600">Телефон: ${user_telephone}</p>
+                    <div class="p-2 h-auto flex flex-col gap-3">
+                        <p class="text-base text-black font-Halvar">Телефон: ${user_telephone}</p>
+                        <p class="font-Rooftop text-sm text-gray-600 font-medium">${review.review_text}</p>   
                     </div>
                 `
             }, {
@@ -98,10 +97,9 @@ submitReview.addEventListener('click', async () => {
     // Создаем метку с отзывом на карте
     const reviewPlacemark = new ymaps.Placemark(userLocation, {
         balloonContent: `
-            <div class="p-2 overflow-y-scroll h-auto ">
-                <h3 class="font-bold mb-1">Отзыв</h3>
-                <p class="mb-2">${review}</p>
-                <p class="text-sm text-gray-600">Телефон: ${user_telephone}</p>
+            <div class="p-2 h-auto flex flex-col gap-3">
+                <p class="text-base text-black font-Halvar">Телефон: ${user_telephone}</p>
+                <p class="font-Rooftop text-sm text-gray-600 font-medium">${review.review_text}</p>   
             </div>
         `
     }, {

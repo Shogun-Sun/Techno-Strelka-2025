@@ -6,17 +6,17 @@
     <title>Вход - Регистрация</title>
     <link rel="stylesheet" href="./css/out.css">
 </head>
-<body class="duration-500 transition-all scroll-smooth">
-    <main class="min-h-screen absolute w-full flex items-center justify-center bg-gray-950">
-        <div class="w-120 h-136 rounded-3xl px-6 py-4 flex flex-col justify-between items-center gap-8 bg-white">
-            <h1 class="text-4xl font-bold text-gray-950 text-start w-full">Войти</h1>
+<body class="duration-500 transition-all scroll-smooth bg-black selection:bg-pink-500 selection:text-white">
+    <main class="min-h-screen absolute w-full flex items-center justify-center px-5 sm:p-0 duration-300 transition-all">
+        <div class="w-full sm:w-120 h-136 rounded-3xl px-6 py-4 flex flex-col justify-between items-center gap-8 bg-white duration-300 transition-all">
+            <h1 class="text-4xl font-bold text-gray-950 text-start w-full font-Halvar">Войти</h1>
 
-            <div class="flex flex-col basis-10/12 justify-start w-full py-4 gap-4">
-                <form class="flex flex-row gap-3 items-center">
+            <div class="flex flex-col basis-10/12 justify-start w-full py-4 gap-6">
+                <h1 class="font-Rooftop text-xl text-gray-500 ">Введите номер любого оператора</h1>
+                <form class="flex flex-row gap-2 sm:gap-3 items-center justify-center">
                     <span class="flex items-center">
-                        <input class="w-5 text-3xl text-gray-950" readonly placeholder="+" tabindex="-1" value="+">
-                        <input id="phoneNumber0" class="input_numb" type="text" value="7" maxlength="1" readonly
-                               style="width: 20px; text-align: center;">
+                        <input class="w-5.5 sm:w-7 h-auto text-xl sm:text-3xl text-gray-950 ring-none outline-none border-none flex items-start" readonly placeholder="+" tabindex="-1" value="+">
+                        <input id="phoneNumber0" class="input_numb" type="text" value="7" maxlength="1" readonly>
                     </span>
                     <span class="flex">
                         <input id="phoneNumber1" class="input_numb" placeholder="0" type="text" maxlength="1" required>
@@ -43,16 +43,14 @@
                         appearance-none focus:outline-none focus:ring-0 peer rounded-xl hover:bg-gray-300 overflow-hidden" placeholder=" "/>
                         <label for="password" class="absolute text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 
                         origin-[0] start-3 peer-focus:text-gray-950  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-                        peer-focus:scale-75 peer-focus:-translate-y-4 rounded-2xl text-base">Пароль</label>
+                        peer-focus:scale-75 peer-focus:-translate-y-4 rounded-2xl text-lg font-Rooftop">Пароль</label>
                     </div>
                 </div>
             </div>
-            <div id="form_footer" class="flex flex-col items-center justify-between px-5 w-full">
-                <button id="login_btn" class="text-lg h-8 w-full rounded-10 bg-gray-950 text-white md:text-xl md:h-10 md:py-2
-                transform transition-all hover:bg-gray-800 duration-500 flex items-center justify-center">
-                    Войти
-                </button>
-            </div>
+            <button id="login_btn" class="text-xl w-full py-3 rounded-10 bg-black text-white
+            transform transition-all hover:bg-gray-950 duration-500 flex items-center justify-center font-Halvar">
+                Войти
+            </button>
         </div>
     </main>
     <script src="./js/login.js"></script>

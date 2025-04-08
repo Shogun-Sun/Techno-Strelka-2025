@@ -8,12 +8,31 @@
 @theme{
     --radius-10: 10px;
     --shadow-test: 10px 10px 20px rgba(255, 255, 255, 80);
+    --font-Halvar: 'HalvarBreitt', sans-serif;
+    --font-Rooftop: 'Rooftop', sans-serif;
 }
 
-
+@font-face {
+    font-family: 'HalvarBreitt'; /* Имя шрифта, которое вы будете использовать в CSS */
+    src: local("Halvar breitt"),
+         local("HalvarBreitt"),
+         url('./fonts/HalvarBreitt2-XBd.woff2') format('woff2'), /* Путь к файлу шрифта */
+         url('./fonts/HalvarBreitt2-XBd.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Rooftop'; /* Имя шрифта, которое вы будете использовать в CSS */
+    src: local("Rooftop"),
+         url('./fonts/t2-Rooftop-Regular.woff2') format('woff2'), /* Путь к файлу шрифта */
+         url('./fonts/t2-Rooftop-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 .input_numb{
-    @apply w-5 h-auto text-3xl text-gray-950 outline-none border border-transparent font-bold p-0
+    @apply w-5.5 sm:w-7 h-auto text-2xl sm:text-3xl text-gray-950 outline-none border border-transparent p-0 font-light font-Halvar items-end
 }
+
 
 /* Анимация для ошибок */
 .error-message {
