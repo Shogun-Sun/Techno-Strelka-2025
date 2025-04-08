@@ -12,31 +12,31 @@
             <h1 class="text-4xl font-bold text-gray-950 text-start w-full">Войти</h1>
 
             <div class="flex flex-col basis-10/12 justify-start w-full py-4 gap-4">
-                <div class="flex flex-row gap-3 items-center">
+                <form class="flex flex-row gap-3 items-center">
                     <span class="flex items-center">
                         <input class="w-5 text-3xl text-gray-950" readonly placeholder="+" tabindex="-1" value="+">
                         <input id="phoneNumber0" class="input_numb" type="text" value="7" maxlength="1" readonly
                                style="width: 20px; text-align: center;">
                     </span>
                     <span class="flex">
-                        <input id="phoneNumber1" class="input_numb" placeholder="0" type="text" maxlength="1">
-                        <input id="phoneNumber2" class="input_numb" placeholder="0" type="text" maxlength="1">
-                        <input id="phoneNumber3" class="input_numb" placeholder="0" type="text" maxlength="1">
+                        <input id="phoneNumber1" class="input_numb" placeholder="0" type="text" maxlength="1" required>
+                        <input id="phoneNumber2" class="input_numb" placeholder="0" type="text" maxlength="1"required>
+                        <input id="phoneNumber3" class="input_numb" placeholder="0" type="text" maxlength="1"required>
                     </span>
                     <span class="flex">
-                        <input id="phoneNumber4" class="input_numb" placeholder="0" type="text" maxlength="1">
-                        <input id="phoneNumber5" class="input_numb" placeholder="0" type="text" maxlength="1">
-                        <input id="phoneNumber6" class="input_numb" placeholder="0" type="text" maxlength="1">
+                        <input id="phoneNumber4" class="input_numb" placeholder="0" type="text" maxlength="1"required>
+                        <input id="phoneNumber5" class="input_numb" placeholder="0" type="text" maxlength="1"required>
+                        <input id="phoneNumber6" class="input_numb" placeholder="0" type="text" maxlength="1"required>
                     </span>
                     <span class="flex">
-                        <input id="phoneNumber7" class="input_numb" placeholder="0" type="text" maxlength="1">
-                        <input id="phoneNumber8" class="input_numb" placeholder="0" type="text" maxlength="1">
+                        <input id="phoneNumber7" class="input_numb" placeholder="0" type="text" maxlength="1"required>
+                        <input id="phoneNumber8" class="input_numb" placeholder="0" type="text" maxlength="1"required>
                     </span>
                     <span class="flex">
-                        <input id="phoneNumber9" class="input_numb" placeholder="0" type="text" maxlength="1">
-                        <input id="phoneNumber10" class="input_numb" placeholder="0" type="text" maxlength="1">
+                        <input id="phoneNumber9" class="input_numb" placeholder="0" type="text" maxlength="1"required>
+                        <input id="phoneNumber10" class="input_numb" placeholder="0" type="text" maxlength="1"required>
                     </span>
-                </div>
+                </form>
                 <div class="flex flex-col justify-around md:justify-between">
                     <div class="relative">
                         <input type="password" id="password" class="block px-3 pb-3 pt-6 w-full text-sm text-gray-900 bg-gray-200 
@@ -55,67 +55,6 @@
             </div>
         </div>
     </main>
-    <script>
-        const inputs = document.querySelectorAll('.input_numb');
-        
-        // Автоматически фокусируем первое редактируемое поле
-        document.addEventListener('DOMContentLoaded', () => {
-            inputs[1].focus();
-        });
-
-        inputs.forEach((input, index) => {
-            // Пропускаем первое поле (оно readonly)
-            if (index === 0) return;
-            
-            // Обработка ввода
-            input.addEventListener('input', function() {
-                // Оставляем только цифры
-                this.value = this.value.replace(/\D/g, '');
-                
-                if (this.value.length === 1 && index < inputs.length - 1) {
-                    inputs[index + 1].focus();
-                }
-                
-                // Если это последнее поле и оно заполнено
-                if (index === inputs.length - 1 && this.value.length === 1) {
-                    // Можно добавить обработку завершения ввода
-                    console.log('Номер полностью введён');
-                }
-            });
-
-            // Обработка Backspace
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace') {
-                    if (this.value.length === 0 && index > 1) {
-                        // Если поле пустое - переходим к предыдущему
-                        inputs[index - 1].focus();
-                    } else if (this.value.length > 0) {
-                        // Если в поле есть текст - сначала очищаем его
-                        this.value = '';
-                    }
-                }
-            });
-            
-            // Обработка вставки из буфера обмена
-            input.addEventListener('paste', function(e) {
-                e.preventDefault();
-                const pasteData = e.clipboardData.getData('text').replace(/\D/g, '');
-                
-                if (pasteData.length > 0) {
-                    // Заполняем текущее и следующие поля
-                    let remainingDigits = pasteData;
-                    for (let i = index; i < inputs.length && remainingDigits.length > 0; i++) {
-                        inputs[i].value = remainingDigits[0];
-                        remainingDigits = remainingDigits.slice(1);
-                    }
-                    
-                    // Фокусируем последнее заполненное поле
-                    const lastFilledIndex = Math.min(index + pasteData.length - 1, inputs.length - 1);
-                    inputs[lastFilledIndex].focus();
-                }
-            });
-        });
-    </script>
     <script src="./js/login.js"></script>
 </body>
 </html>
