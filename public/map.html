@@ -7,7 +7,31 @@
     <link rel="stylesheet" href="./css/out.css">
     <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_api_ключ&lang=ru_RU" type="text/javascript"></script>
 </head>
+
+
+
 <body class="font-sans antialiased">
+    <nav class="fixed top-0 w-full py-4 bg-black flex flex-row justify-between px-4 z-50 items-center">
+        <div id="logo">
+            <img src="./pictures/t2_Logo_White_CMYK.png" alt="t2" class="w-10 h-auto">
+        </div>
+        <div class="flex bg-gray-200 rounded-lg overflow-hidden shadow-md relative px-3 py-1 gap-6">
+            <div>
+                <label class="w-22 text-center block text-lg text-black border">Покрытие</label>
+                <input type="radio" name="test" class="hidden">
+            </div>
+            <div>
+                <label class="w-22 text-center block text-lg text-black border">Отзывы</label>
+                <input type="radio" name="test" class="hidden">
+            </div>
+            <div class="absolute h-full py-1 w-25 rounded-xl top-0 left-3 -z-10"> 
+                <div class="w-full h-full bg-white"></div>               
+            </div>
+        </div>
+        <button id="login" class="text-base font-bold text-black bg-white rounded-lg px-3 py-1 hover:bg-gray-100">
+            Войти
+        </button>
+    </nav>
     <div id="map" class="w-full h-screen"></div>
     
     <button id="addReviewBtn" class="fixed bottom-8 right-8 z-50 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
@@ -178,6 +202,22 @@
             
             // Показываем уведомление
             alert('Спасибо за ваш отзыв! Он отмечен на карте.');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const smsButton = document.getElementById('sms-button');
+            const passwordButton = document.getElementById('password-button');
+    
+            smsButton.addEventListener('click', function() {
+                smsButton.classList.add('active');
+                passwordButton.classList.remove('active');
+            });
+    
+            passwordButton.addEventListener('click', function() {
+                passwordButton.classList.add('active');
+                smsButton.classList.remove('active');
+            });
         });
     </script>
 </body>

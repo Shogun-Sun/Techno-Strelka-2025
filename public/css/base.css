@@ -10,6 +10,7 @@
     --shadow-test: 10px 10px 20px rgba(255, 255, 255, 80);
 }
 
+
 .input_numb{
     @apply w-5 h-auto text-3xl text-gray-950 outline-none border border-transparent font-bold p-0
 }
