@@ -8,6 +8,7 @@ import { SequelizeStore } from './session/sequelize-store';
 import * as session from 'express-session';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Session } from './database/models/session.model';
+import { PagesModule } from './pages/pages.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { Session } from './database/models/session.model';
     UserModule,
     SessionModule,
     DatabaseModule,
+    PagesModule,
   ],
   controllers: [],
   providers: [],

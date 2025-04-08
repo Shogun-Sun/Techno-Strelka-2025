@@ -14,17 +14,20 @@ import { SessionData } from 'express-session';
 import { UserSession } from 'src/types/session';
 import { Response } from 'express';
 import { SessionAuth } from 'src/decorators/session.decorator';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('/reg')
+  @ApiOperation({ summary: 'Регистрация пользователя' })
+  @Post('/register')
   newUser(@Body() newUserDto: NewUserDto) {
     return this.userService.newUser(newUserDto);
   }
 
-  @Post('/log')
+  @ApiOperation({ summary: 'Авторизация' })
+  @Post('/login')
   async logUser(
     @Session() session: SessionData,
     @Body() loginUserDto: LoginUserDto,
@@ -46,12 +49,13 @@ export class UserController {
 
     return { message: 'Вы успешно авторизовались', user: session.user };
   }
-
+  @ApiOperation({ summary: 'Получение данных пользователя' })
   @Get('/profile')
   getProfile(@SessionAuth() user: UserSession) {
     return { message: 'Данные пользователя', user };
   }
 
+  @ApiOperation({ summary: 'Выход из сессии' })
   @Get('/logout')
   logout(
     @Session() session: Record<string, any>,
