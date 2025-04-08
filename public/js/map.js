@@ -274,6 +274,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         user_id = userData.user.user_id;
         user_telephone = userData.user.user_telephone;
-        document.querySelector("#phoneNumberComment").innerHTML = user_telephone;
+        document.querySelector("#phoneNumberComment").textContent = user_telephone;
 
 })

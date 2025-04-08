@@ -68,8 +68,7 @@
 
             <div class="mb-6">
                 <label class="text-lg block text-gray-500 mb-2 font-Rooftop">Ваш телефон</label>
-                <div id="phoneNumberComment" class="flex flex-row gap-3 items-center text-3xl font-bold text-gray-950">
-                   +7 000 000 00 00
+                <div id="phoneNumberComment" class="flex flex-row gap-3 items-center text-3xl font-bold text-gray-950 text-center">
                 </div>
             </div>
             
@@ -81,24 +80,33 @@
                  focus:border-transparent" placeholder="Напишите ваш отзыв здесь..." autosi></textarea>
             </div>
 
-            <button id="startTest" class="mb-6 w-full flex items-center justify-center text-xl font-semibold bg-gray-950 text-white py-3 rounded-xl hover:bg-gray-800 
-            transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+            <button id="startTest" class="w-full flex items-center justify-center text-xl font-semibold bg-black text-white py-3 rounded-xl hover:bg-gray-950 
+            transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar">
                 Пройти тест скорости
             </button>
 
             <div id="results" class="hidden space-y-3 text-left">
                 <div class="flex justify-between">
-                    <span class="font-medium">Скачивание:</span>
-                    <span id="download-speed" class="font-bold"></span> Mbps
-                </div>
-                <div class="flex justify-between">
-                    <span class="font-medium">Отправка:</span>
-                    <span id="upload-speed" class="font-bold"></span> Mbps
-                </div>
-                <div class="flex justify-between">
-                    <span class="font-medium">Пинг:</span>
-                    <span id="ping" class="font-bold"></span> ms
-                </div>
+                        <span class="font-semibold font-Rooftop">Скачивание:</span>
+                        <div class="flex justify-between basis-1/2 ">
+                            <span id="download-speed" class="font-bold font-Rooftop"></span>
+                            <span> Mbps </span> 
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-semibold font-Rooftop">Отправка:</span>
+                        <div class="flex justify-between basis-1/2 ">
+                            <span id="upload-speed" class="font-bold font-Rooftop"></span>
+                            <span> Mbps </span> 
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-semibold font-Rooftop">Пинг:</span>
+                        <div class="flex justify-between basis-1/2">
+                            <span id="ping" class="font-bold font-Rooftop"></span>
+                            <span> ms </span> 
+                        </div>
+                    </div>
             </div>
             
             <!-- Кнопка отправки -->
@@ -118,16 +126,25 @@
             {{#if review_speed_test.download}}
                 <div id="results" class=" space-y-3 text-left">
                     <div class="flex justify-between">
-                        <span class="font-medium">Скачивание:</span>
-                        <span id="download-speed" class="font-bold">{{review_speed_test.download}}</span> Mbps
+                        <span class="font-semibold font-Rooftop">Скачивание:</span>
+                        <div class="flex justify-between basis-1/2">
+                            <span id="download-speed" class="font-bold font-Rooftop">{{review_speed_test.download}}</span>
+                            <span> Mbps </span> 
+                        </div>
                     </div>
                     <div class="flex justify-between">
-                        <span class="font-medium">Отправка:</span>
-                        <span id="upload-speed" class="font-bold">{{review_speed_test.upload}}</span> Mbps
+                        <span class="font-semibold font-Rooftop">Отправка:</span>
+                        <div class="flex justify-between basis-1/2 ">
+                            <span id="upload-speed" class="font-bold font-Rooftop">{{review_speed_test.upload}}</span>
+                            <span> Mbps </span> 
+                        </div>
                     </div>
                     <div class="flex justify-between">
-                        <span class="font-medium">Пинг:</span>
-                        <span id="ping" class="font-bold">{{review_speed_test.ping}}</span> ms
+                        <span class="font-semibold font-Rooftop">Пинг:</span>
+                        <div class="flex justify-between basis-1/2">
+                            <span id="ping" class="font-bold font-Rooftop">{{review_speed_test.ping}}</span>
+                            <span> ms </span> 
+                        </div>
                     </div>
                 </div>
             {{else}}
