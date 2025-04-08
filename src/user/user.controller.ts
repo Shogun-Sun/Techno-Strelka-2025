@@ -43,9 +43,7 @@ export class UserController {
 
     session.user = {
       user_id: user.user_id,
-      user_name: user.user_name,
-      user_email: user.user_telephone,
-      user_role: user.user_role,
+      user_telephone: user.user_telephone,
     };
 
     return { message: 'Вы успешно авторизовались', user: session.user };
