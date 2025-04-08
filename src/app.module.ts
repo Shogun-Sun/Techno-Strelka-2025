@@ -10,6 +10,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Session } from './database/models/session.model';
 import { PagesModule } from './pages/pages.module';
 import { AdminModule } from './admin/admin.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AdminModule } from './admin/admin.module';
     DatabaseModule,
     PagesModule,
     AdminModule,
+    ReviewsModule,
   ],
   controllers: [],
   providers: [],

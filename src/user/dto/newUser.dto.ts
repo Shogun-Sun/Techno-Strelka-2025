@@ -3,14 +3,6 @@ import { IsNotEmpty, IsString, IsPhoneNumber } from 'class-validator';
 
 export class NewUserDto {
   @ApiProperty({
-    example: 'test',
-    description: 'Имя пользователя',
-  })
-  @IsString({ message: 'Должно быть строкой' })
-  @IsNotEmpty({ message: 'Поле не должно быть пустым' })
-  user_name: string;
-
-  @ApiProperty({
     example: '123456789',
     description: 'Пароль пользователя',
   })

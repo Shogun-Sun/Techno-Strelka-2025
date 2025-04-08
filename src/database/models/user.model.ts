@@ -11,6 +11,7 @@ import {
   Default,
 } from 'sequelize-typescript';
 import { Session } from './session.model';
+import { Review } from './reviews.model';
 
 @Table({ tableName: 'users', timestamps: false })
 export class User extends Model {
@@ -21,21 +22,15 @@ export class User extends Model {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  declare user_name: string;
+  declare user_telephone: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
   declare user_password: string;
 
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  declare user_telephone: string;
-
-  @Default('user')
-  @AllowNull(false)
-  @Column(DataType.ENUM('user', 'admin'))
-  declare user_role: 'user' | 'admin';
-
   @HasMany(() => Session)
   declare sessions: Session[];
+
+  @HasMany(() => Review)
+  declare reviews: Review[];
 }

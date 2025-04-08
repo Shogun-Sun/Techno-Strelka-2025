@@ -4,6 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { DATABASE_PATH } from 'src/config';
 import { User } from './models/user.model';
 import { Session } from './models/session.model';
+import { Review } from './models/reviews.model';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { Session } from './models/session.model';
       storage: DATABASE_PATH,
       autoLoadModels: true,
       synchronize: true,
-      models: [User, Session],
+      models: [User, Session, Review],
       logging: false,
     }),
   ],
