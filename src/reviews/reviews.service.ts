@@ -2,7 +2,10 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Review } from 'src/database/models/reviews.model';
 import { CreateReviewDto } from './dto/createRevie.dto';
-import { CreateReviewResponse, GetAllReviewsResponse } from 'src/types/Responses';
+import {
+  CreateReviewResponse,
+  GetAllReviewsResponse,
+} from 'src/types/Responses';
 import { User } from 'src/database/models/user.model';
 
 @Injectable()
