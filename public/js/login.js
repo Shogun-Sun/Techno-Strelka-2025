@@ -89,7 +89,11 @@ document.querySelector("#login_btn").addEventListener("click", () => {
         })
         .then(res=> res.json())
         .then((userMessage) => {
-            alert(userMessage.message)
+            if (userMessage.user) {
+                window.location.href = "/map"
+            } else {
+                alert(userMessage.message)
+            }
         })
     }
 })

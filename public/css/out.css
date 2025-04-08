@@ -228,9 +228,6 @@
   .top-4 {
     top: calc(var(--spacing) * 4);
   }
-  .right-1 {
-    right: calc(var(--spacing) * 1);
-  }
   .right-3 {
     right: calc(var(--spacing) * 3);
   }
@@ -246,14 +243,11 @@
   .bottom-8 {
     bottom: calc(var(--spacing) * 8);
   }
-  .left-1 {
-    left: calc(var(--spacing) * 1);
-  }
   .left-1\/2 {
     left: calc(1/2 * 100%);
   }
-  .left-4 {
-    left: calc(var(--spacing) * 4);
+  .left-3 {
+    left: calc(var(--spacing) * 3);
   }
   .z-10 {
     z-index: 10;
@@ -288,8 +282,8 @@
   .hidden {
     display: none;
   }
-  .h-10 {
-    height: calc(var(--spacing) * 10);
+  .h-8 {
+    height: calc(var(--spacing) * 8);
   }
   .h-20 {
     height: calc(var(--spacing) * 20);
@@ -315,8 +309,8 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .w-5\.5 {
-    width: calc(var(--spacing) * 5.5);
+  .w-5 {
+    width: calc(var(--spacing) * 5);
   }
   .w-8 {
     width: calc(var(--spacing) * 8);
@@ -324,8 +318,11 @@
   .w-20 {
     width: calc(var(--spacing) * 20);
   }
-  .w-26 {
-    width: calc(var(--spacing) * 26);
+  .w-28 {
+    width: calc(var(--spacing) * 28);
+  }
+  .w-120 {
+    width: calc(var(--spacing) * 120);
   }
   .w-full {
     width: 100%;
@@ -338,6 +335,9 @@
   }
   .min-w-10 {
     min-width: calc(var(--spacing) * 10);
+  }
+  .grow {
+    flex-grow: 1;
   }
   .basis-10\/12 {
     flex-basis: calc(10/12 * 100%);
@@ -412,9 +412,6 @@
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
-  }
-  .gap-6 {
-    gap: calc(var(--spacing) * 6);
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
