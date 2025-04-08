@@ -28,6 +28,10 @@ export class Review extends Model {
   declare coordinates: { lat: number; lng: number };
 
   @AllowNull(false)
+  @Column(DataType.JSON)
+  declare review_speed_test: { download: string; upload: string; ping: string };
+
+  @AllowNull(false)
   @ForeignKey(() => User)
   @Column(DataType.INTEGER)
   declare user_id: number;

@@ -40,7 +40,6 @@ export class ReviewsService {
           },
         ],
       });
-      console.log(reviews.map((data) => data));
       return {
         message: 'Отзывы успешно получены',
         data: reviews,

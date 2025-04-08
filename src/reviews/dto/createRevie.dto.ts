@@ -34,4 +34,12 @@ export class CreateReviewDto {
   @IsLatitude({ message: 'Широта должна быть действительной' })
   @IsLongitude({ message: 'Долгота должна быть действительной' })
   coordinates: { lat: number; lng: number };
+
+  @ApiProperty({
+    example: { download: '12.3', upload: '12.3', ping: '12.3' },
+    description: 'Скорость интернета',
+  })
+  @IsNotEmpty({ message: 'Поле не может быть пустым' })
+  @IsObject({ message: 'Поле должно быть объектом' })
+  review_speed_test: { download: string; upload: string; ping: string };
 }
