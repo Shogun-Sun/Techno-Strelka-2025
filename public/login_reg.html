@@ -61,23 +61,24 @@
                     </div>
                     <div id="form_body" class="py-3 px-5 h-52 md:h-60 flex flex-col justify-around w-10/12">
                         <div class="flex flex-col justify-around md:justify-between">
-                            <label for="login" class="text-lg mb-2 text-slate-900 md:mb-3 md:text-xl dark:text-gray-300">Login</label>
-                            <input id="login" type ="email" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 focus:border-yellow-500
+                            <label for="login" class="text-lg mb-2 text-slate-900 md:mb-3 md:text-xl dark:text-gray-300">Телефон</label>
+                            <input id="login" type="tel" pattern="^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$"
+                            placeholder="+7 999 999 99 99" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 focus:border-yellow-500
                             focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 outline-none
-                            invalid:border-pink-700 invalid:text-pink-700">
+                            invalid:border-pink-700 invalid:text-pink-700" required>
                             <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                         </div>
                         <div class="flex flex-col justify-around md:justify-between">
-                            <label for="password" class="text-lg mb-2 text-slate-900 md:mb-3 md:text-xl dark:text-gray-300">Password</label>
-                            <input id="password" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 focus:border-yellow-500
+                            <label for="password" class="text-lg mb-2 text-slate-900 md:mb-3 md:text-xl dark:text-gray-300">Пароль</label>
+                            <input id="password" type="password" placeholder="Пароль" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 focus:border-yellow-500
                             focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 outline-none">
                             <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                         </div>
                     </div>
                     <div id="form_footer" class="h-20 flex flex-col items-center justify-between px-5 w-10/12">
                         <div>
-                            <p class="text-base text-gray-400 text-center mb-2 sm:mb-0">if you don't have an account 
-                                <a id="openModal" class=" underline decoration-1 decoration-yellow-500 text-yellow-500 cursor-pointer">register</a>
+                            <p class="text-base text-gray-400 text-center mb-2 sm:mb-0">Если у вас нет акаунта 
+                                <a id="openModal" class=" underline decoration-1 decoration-yellow-500 text-yellow-500 cursor-pointer">зарегестрируйтесь</a>
                             </p>
                         </div>
                         <button id="login_btn" class="text-lg h-8 w-full rounded-10 bg-yellow-500 text-slate-900 md:text-xl md:h-10 md:py-2 hover:bg-yellow-400 
@@ -109,38 +110,40 @@
                 <!-- Контент -->
                 <div class="px-5 flex flex-col justify-around gap-2 sm:gap-5">
                     <div class="h-20 flex flex-col justify-around">
-                        <label for="email" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Email</label>
-                        <input id="email" type="email" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
-                         focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                        <label for="modal_tel" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Телефон</label>
+                        <input id="modal_tel" type="tel" placeholder="+7 999 999 99 99"
+                        pattern="^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$"
+                        class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                         focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1" required>
                         <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="Surname" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Фамилия</label>
-                        <input id="Surname" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                        <input id="Surname" placeholder="Иваноав" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
                          <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="Name" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Имя</label>
-                        <input id="Name" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                        <input id="Name" placeholder="Иван" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
                         <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="Patronimyc" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Отчество</label>
-                        <input id="Patronimyc" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                        <input id="Patronimyc" placeholder="Иванович" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
                         <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="reg_password" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Пароль</label>
-                        <input id="reg_password" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                        <input id="reg_password" type="password" placeholder="Пароль" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
                         <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="reg_password_2" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Подтвердите пароль</label>
-                        <input id="reg_password_2" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
+                        <input id="reg_password_2" type="password" placeholder="Пароль" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
                         <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
