@@ -142,9 +142,16 @@ function validateRegisterForm() {
 document.getElementById('login_btn').addEventListener('click', function(e) {
     e.preventDefault();
     if (validateLoginForm()) {
-        // Форма валидна, можно отправлять данные
-        alert('Форма входа валидна! Можно отправлять данные на сервер.');
-        // Здесь можно добавить AJAX-запрос или form.submit()
+        fetch( "/user/loginRes", {
+            method:"Post",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify({
+                email:document.getElementById('login').value,
+                password:document.getElementById('password').value
+            })
+        })
     }
 });
 
@@ -153,8 +160,24 @@ document.getElementById('reg_btn').addEventListener('click', function(e) {
     e.preventDefault();
     if (validateRegisterForm()) {
         // Форма валидна, можно отправлять данные
-        alert('Форма регистрации валидна! Можно отправлять данные на сервер.');
-        // Здесь можно добавить AJAX-запрос или form.submit()
+        fetch("/user/register", {
+            method:"Post",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify({
+                email:document.getElementById('email').value,
+                surname:document.getElementById('Surname').value,
+                name:document.getElementById('Name').value,
+                patronimyc:document.getElementById('Patronimyc').value,
+                password:document.getElementById('reg_password').value,
+            })
+        })
+        .then(res=>res.json())
+        .then((userOutMessage) => {
+            console.log(userOutMessage)
+            alert(userOutMessage.message)
+        })
     }
 });
 modal.addEventListener('transitionend', function(e) {
