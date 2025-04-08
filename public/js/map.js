@@ -31,6 +31,35 @@ function init() {
         console.error("Ошибка при определении местоположения:", error);
         alert("Не удалось определить ваше местоположение. Убедитесь, что геолокация включена.");
     });
+
+
+    fetch("/reviews/get/all/reviews", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    .then(reviewsResponse => reviewsResponse.json())
+    .then(reviewsData => {
+        console.log(reviewsData);
+        reviewsData.data.forEach(review => {
+            console.log(review)
+            let reviewPlacemark = new ymaps.Placemark([review.coordinates.lat, review.coordinates.lng], {
+                balloonContent: `
+                    <div class="p-2 overflow-y-scroll h-auto ">
+                        <h3 class="font-bold mb-1">Отзыв</h3>
+                        <p class="mb-2">${review.review_text}</p>
+                        <p class="text-sm text-gray-600">Телефон: ${user_telephone}</p>
+                    </div>
+                `
+            }, {
+                preset: 'islands#greenIcon'
+            });
+        
+            map.geoObjects.add(reviewPlacemark);
+            console.log(reviewPlacemark)
+        }); 
+    })
 }
 
 // Элементы интерфейса
@@ -53,7 +82,7 @@ closeModal.addEventListener('click', () => {
 });
 
 // Отправка отзыва
-submitReview.addEventListener('click', () => {
+submitReview.addEventListener('click', async () => {
     const review = reviewText.value.trim();
 
     if (!review) {
@@ -89,27 +118,60 @@ submitReview.addEventListener('click', () => {
         coordinates: userLocation
     });
 
+    const Response = await fetch("/reviews/create", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            user_id: user_id,
+            review_text: review,
+            coordinates: {
+                lat: userLocation[0],
+                lng: userLocation[1]
+            }
+        })
+    })
+    let data = await Response.json()
+    alert(data.massage);
+    
+
     // Закрываем модальное окно и очищаем форму
     reviewModal.classList.add('hidden');
     reviewModal.classList.remove('flex');
     reviewText.value = '';
 
     // Показываем уведомление
-    alert('Спасибо за ваш отзыв! Он отмечен на карте.');
+    
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetch("/user/profile", {
+document.addEventListener("DOMContentLoaded", async () => {
+    const userResponse = await fetch("/user/profile", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         }
     })
-        .then(res => res.json())
-        .then((userData) => {
-            console.log(userData);
-            user_id = userData.user.user_id;
-            user_telephone = userData.user.user_telephone;
-            document.querySelector("#phoneNumberComment").innerHTML = user_telephone;
-        });
-});
+        let userData = await userResponse.json()
+        console.log(userData);
+        user_id = userData.user.user_id;
+        user_telephone = userData.user.user_telephone;
+        document.querySelector("#phoneNumberComment").innerHTML = user_telephone;
+
+    
+})
+
+// reviewsData.reviews.forEach(review => {
+//     const reviewPlacemark = new ymaps.Placemark([review.coordinates.lat, review.coordinates.lng], {
+//         balloonContent: `
+//             <div class="p-2 overflow-y-scroll h-auto ">
+//                 <h3 class="font-bold mb-1">Отзыв</h3>
+//                 <p class="mb-2">${review.review_text}</p>
+//                 <p class="text-sm text-gray-600">Телефон: ${review.user_telephone}</p>
+//             </div>
+//         `
+//     }, {
+//         preset: 'islands#greenIcon'
+//     });
+//     map.geoObjects.add(reviewPlacemark);
+// })
