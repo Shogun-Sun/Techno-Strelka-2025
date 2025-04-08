@@ -1,12 +1,12 @@
 import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
-import { GoogleCloudService } from './googlecloud.service';
+import { ChatBotService } from './chat-bot.service';
 import { DialogPromptDto } from './dto/dialogPrompt.dto';
 
 @Controller('chat/bot')
-export class GoogleCloudController {
-  constructor(private readonly googlecloudService: GoogleCloudService) {}
+export class ChatBotController {
+  constructor(private readonly chatBotService: ChatBotService) {}
   @Post('dialog')
   getResponse(@Body(new ValidationPipe()) prompt: DialogPromptDto) {
-    return this.googlecloudService.accessGeminiApi(prompt);
+    return this.chatBotService.accessGeminiApi(prompt);
   }
 }

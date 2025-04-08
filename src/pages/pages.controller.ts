@@ -14,6 +14,12 @@ export class PagesController {
     res.sendFile(this.pagePath('login_reg.html'));
   }
 
+  @ApiOperation({ summary: 'Страница чат бота' })
+  @Get('chatbot')
+  chatBotPage(@Res() res: Response) {
+    res.sendFile(this.pagePath('ChatBot.html'));
+  }
+
   pagePath(file: string) {
     return join(__dirname, '..', '..', 'public', file);
   }

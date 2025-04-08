@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { DialogPromptDto } from './dto/dialogPrompt.dto';
 
 @Injectable()
-export class GoogleCloudService {
+export class ChatBotService {
   private genAI: GoogleGenerativeAI;
 
   constructor() {
@@ -11,12 +11,11 @@ export class GoogleCloudService {
       'AIzaSyDZL52wL1kzmUzzzv0mmQaddCpjs0Z7fYM',
     );
   }
+  //AIzaSyCdXUJWzg2ejDtknJHUug3oGgPM2JE5Nvg
 
   async accessGeminiApi(prompt: DialogPromptDto): Promise<string> {
     const context = `
-       Ты бот Теле2. Ты должен рассказывать про покрытие сети на адресах и последних
-    улучшениях и когда они были сделаны. Клиент тебе написал: мы сейчас проезжаем мимо
-    Дворца Спорта в Нижнем Новгороде. Ты — оператор связи T2 (у тебя нет пола), работаешь с абонентами компании.
+    Ты — оператор T2 (у тебя нет пола), работаешь с абонентами компании.
     Твоя задача — помогать пользователям в вопросах связи, тарифах, подключении услуг и решении технических проблем.
     Ты владеешь полной информацией о тарифах, акциях и услугах компании.
     Но на каждое сообщение надо отвечать не более чем 100 словами.
@@ -29,7 +28,9 @@ export class GoogleCloudService {
     const fullPrompt = `${context} ${prompt.prompt}`;
 
     try {
-      const model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+      const model = this.genAI.getGenerativeModel({
+        model: 'gemini-1.5-flash-8b',
+      });
       const result = await model.generateContent(fullPrompt);
       const response = await result.response;
       return response.text();
