@@ -11,27 +11,38 @@
 
 
 <body class="font-sans antialiased">
+    <div class="hidden right-3"></div>
     <nav class="fixed top-0 w-full py-4 bg-black flex flex-row justify-between px-4 z-50 items-center">
         <div id="logo">
             <img src="./pictures/t2_Logo_White_CMYK.png" alt="t2" class="w-10 h-auto">
         </div>
-        <div class="flex bg-gray-200 rounded-lg overflow-hidden shadow-md relative px-3 py-1 gap-6">
-            <div>
-                <label class="w-22 text-center block text-lg text-black border">Покрытие</label>
-                <input type="radio" name="test" class="hidden">
+        <div class="flex bg-gray-200 rounded-lg overflow-hidden shadow-md relative px-3 py-1 gap-8">
+            <!-- Покрытие -->
+            <div class="relative z-20">
+                <input type="radio" name="navSwitch" id="coverage" class="hidden" checked>
+                <label for="coverage" class="w-28 text-center block text-lg text-black cursor-pointer px-4 py-1 transition-colors duration-200">
+                    Покрытие
+                </label>
             </div>
-            <div>
-                <label class="w-22 text-center block text-lg text-black border">Отзывы</label>
-                <input type="radio" name="test" class="hidden">
+            
+            <!-- Отзывы -->
+            <div class="relative z-20">
+                <input type="radio" name="navSwitch" id="reviews" class="hidden">
+                <label for="reviews" class="w-28 text-center block text-lg text-black cursor-pointer px-4 py-1 transition-colors duration-200">
+                    Отзывы
+                </label>
             </div>
-            <div class="absolute h-full py-1 w-25 rounded-xl top-0 left-3 -z-10"> 
-                <div class="w-full h-full bg-white"></div>               
+            
+            <!-- Индикатор выбора -->
+            <div id="navIndicator" class="absolute h-full py-1 w-28 rounded-lg top-0 left-3 z-10 transition-all duration-500"> 
+                <div class="w-full h-full bg-white rounded-lg shadow-sm"></div>               
             </div>
         </div>
         <button id="login" class="text-base font-bold text-black bg-white rounded-lg px-3 py-1 hover:bg-gray-100">
             Войти
         </button>
     </nav>
+    
     <div id="map" class="w-full h-screen"></div>
     
     <button id="addReviewBtn" class="fixed bottom-8 right-8 z-50 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
@@ -204,21 +215,27 @@
             alert('Спасибо за ваш отзыв! Он отмечен на карте.');
         });
     </script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const smsButton = document.getElementById('sms-button');
-            const passwordButton = document.getElementById('password-button');
-    
-            smsButton.addEventListener('click', function() {
-                smsButton.classList.add('active');
-                passwordButton.classList.remove('active');
-            });
-    
-            passwordButton.addEventListener('click', function() {
-                passwordButton.classList.add('active');
-                smsButton.classList.remove('active');
-            });
-        });
+        const coverageRadio = document.getElementById('coverage');
+        const reviewsRadio = document.getElementById('reviews');
+        const navIndicator = document.getElementById('navIndicator');
+
+        function updateIndicator(){
+            
+            if(coverageRadio.checked){
+                navIndicator.classList.remove('right-3');
+                navIndicator.classList.add('left-3');   
+            }
+            if(reviewsRadio.checked){
+                navIndicator.classList.remove('left-3');
+                navIndicator.classList.add('right-3');
+            }
+        }
+
+        coverageRadio.addEventListener('change', updateIndicator);
+        reviewsRadio.addEventListener('change', updateIndicator);
+        
     </script>
 </body>
 </html>
