@@ -1,5 +1,5 @@
 /* Запуск пересборки tailwindcss 
-    npx @tailwindcss/cli -i ./css/base.css -o ./css/out.css --watch 
+    npx @tailwindcss/cli -i ./public/css/base.css -o ./public/css/out.css --watch 
 */
 @import "tailwindcss";
 

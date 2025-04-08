@@ -4,6 +4,9 @@ let map;
 let userLocation = null; // Изначально null
 let userPlacemark = null;
 
+const coverage = document.getElementById('coverage');
+const reviews = document.getElementById('reviews');
+
 // Инициализация карты
 ymaps.ready(init);
 
@@ -13,54 +16,79 @@ function init() {
         zoom: 12
     });
 
-    // Определение местоположения пользователя
-    ymaps.geolocation.get({
-        provider: 'browser',
-        mapStateAutoApply: true
-    }).then(function (result) {
-        userLocation = result.geoObjects.get(0).geometry.getCoordinates();
-        map.setCenter(userLocation, 15);
-        console.log(userLocation);
+    function addSelfpoint() {
+        // Определение местоположения пользователя
+        ymaps.geolocation.get({
+            provider: 'browser',
+            mapStateAutoApply: true
+        }).then(function (result) {
+            userLocation = result.geoObjects.get(0).geometry.getCoordinates();
+            map.setCenter(userLocation, 15);
 
-        // Добавляем метку пользователя
-        userPlacemark = new ymaps.Placemark(userLocation, {}, {
-            preset: 'islands#blueDotIcon'
+            // Добавляем метку пользователя
+            userPlacemark = new ymaps.Placemark(userLocation, {
+                hintContent: 'Ваше местоположение',
+                // balloonContent: 'Это красивая метка',
+            },
+            {
+                iconLayout: 'default#image',
+                iconImageHref: '/pictures/placeholder.png',
+                // iconImageSize: [30, 42],
+            });
+            map.geoObjects.add(userPlacemark);
+        }).catch(function (error) {
+            console.error("Ошибка при определении местоположения:", error);
+            alert("Не удалось определить ваше местоположение. Убедитесь, что геолокация включена.");
         });
-        map.geoObjects.add(userPlacemark);
-    }).catch(function (error) {
-        console.error("Ошибка при определении местоположения:", error);
-        alert("Не удалось определить ваше местоположение. Убедитесь, что геолокация включена.");
-    });
+    }
 
-
-    fetch("/reviews/get/all/reviews", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
+    coverage.addEventListener("change", () => {
+        if (coverage.checked) {
+            map.geoObjects.removeAll()
+            addSelfpoint()
         }
     })
-    .then(reviewsResponse => reviewsResponse.json())
-    .then(reviewsData => {
-        console.log(reviewsData);
-        reviewsData.data.forEach(review => {
-            console.log(review)
-            let reviewPlacemark = new ymaps.Placemark([review.coordinates.lat, review.coordinates.lng], {
-                balloonContent: `
-                    <div class="p-2 overflow-y-scroll h-auto ">
-                        <h3 class="font-bold mb-1">Отзыв</h3>
-                        <p class="mb-2">${review.review_text}</p>
-                        <p class="text-sm text-gray-600">Телефон: ${user_telephone}</p>
-                    </div>
-                `
-            }, {
-                preset: 'islands#greenIcon'
-            });
-        
-            map.geoObjects.add(reviewPlacemark);
-            console.log(reviewPlacemark)
-        }); 
+    console.log(reviews.checked)
+
+    reviews.addEventListener("change", () => {
+        if (reviews.checked) {
+            map.geoObjects.removeAll()
+            addSelfpoint()
+            getReviews()
+        }
     })
+
+    function getReviews() {
+        fetch("/reviews/get/all/reviews", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        .then(reviewsResponse => reviewsResponse.json())
+        .then(reviewsData => {
+            reviewsData.data.forEach(review => {
+                let reviewPlacemark = new ymaps.Placemark([review.coordinates.lat, review.coordinates.lng], {
+                    hintContent: 'Комментарий пользователя',
+                    balloonContent: `
+                        <div class="p-2 overflow-y-scroll h-auto ">
+                            <h3 class="font-bold mb-1">Отзыв</h3>
+                            <p class="mb-2">${review.review_text}</p>
+                            <p class="text-sm text-gray-600">Телефон: ${user_telephone}</p>
+                        </div>
+                    `
+                }, {
+                    iconLayout: 'default#image',
+                    iconImageHref: '/pictures/mobile-map.png',
+                });
+            
+                map.geoObjects.add(reviewPlacemark);
+            }); 
+        })
+    }
 }
+
+
 
 // Элементы интерфейса
 const addReviewBtn = document.getElementById('addReviewBtn');
@@ -69,10 +97,68 @@ const closeModal = document.getElementById('closeModal');
 const submitReview = document.getElementById('submitReview');
 const reviewText = document.getElementById('reviewText');
 
+const startButton = document.getElementById("startTest");
+const resultsDiv = document.getElementById('results');
+const downloadEl = document.getElementById('download-speed');
+const uploadEl = document.getElementById('upload-speed');
+const pingEl = document.getElementById('ping');
+    
+function runSpeedTest() {
+
+    startButton.disabled = true;
+    startButton.textContent = 'Тестирование...';
+    resultsDiv.classList.add('hidden');
+
+    // Имитация процесса тестирования
+    let download = 0;
+    let upload = 0;
+    let ping = 0;
+    
+    const downloadInterval = setInterval(() => {
+        download += Math.random() * 10;
+        downloadEl.textContent = download.toFixed(2);
+        if (download >= 80 + Math.random() * 40) {
+            clearInterval(downloadInterval);
+            startUploadTest();
+        }
+    }, 200);
+
+    function startUploadTest() {
+        const uploadInterval = setInterval(() => {
+            upload += Math.random() * 5;
+            uploadEl.textContent = upload.toFixed(2);
+            if (upload >= 20 + Math.random() * 20) {
+                clearInterval(uploadInterval);
+                finishTest();
+            }
+        }, 200);
+    }
+
+    function finishTest() {
+        ping = 10 + Math.random() * 30;
+        pingEl.textContent = ping.toFixed(2);
+        resultsDiv.classList.remove('hidden');
+        startButton.textContent = 'Повторить тест';
+        startButton.disabled = false;
+    }
+}
+
+startButton.addEventListener('click', runSpeedTest);
+
+startTest.addEventListener("click", () => {
+    
+})
+
+
 // Открытие модального окна
 addReviewBtn.addEventListener('click', () => {
-    reviewModal.classList.remove('hidden');
-    reviewModal.classList.add('flex');
+    if (user_id) {
+        reviewModal.classList.remove('hidden');
+        reviewModal.classList.add('flex');
+    } else {
+        window.location.href = "/loginPage";
+    }
+    
 });
 
 // Закрытие модального окна
@@ -97,6 +183,7 @@ submitReview.addEventListener('click', async () => {
 
     // Создаем метку с отзывом на карте
     const reviewPlacemark = new ymaps.Placemark(userLocation, {
+        hintContent: 'Комментарий пользователя',
         balloonContent: `
             <div class="p-2 overflow-y-scroll h-auto ">
                 <h3 class="font-bold mb-1">Отзыв</h3>
@@ -105,7 +192,8 @@ submitReview.addEventListener('click', async () => {
             </div>
         `
     }, {
-        preset: 'islands#greenIcon'
+        iconLayout: 'default#image',
+        iconImageHref: '/pictures/mobile-map.png',
     });
 
     map.geoObjects.add(reviewPlacemark);
@@ -115,8 +203,14 @@ submitReview.addEventListener('click', async () => {
     console.log('Отправка отзыва:', {
         phone: user_telephone,
         review: review,
-        coordinates: userLocation
+        coordinates: userLocation,
+        review_speed_test: {
+            "download":downloadEl.innerText,
+            "upload":uploadEl.innerText,
+            "ping":pingEl.innerText,
+        }
     });
+
 
     const Response = await fetch("/reviews/create", {
         method: "POST",
@@ -129,11 +223,16 @@ submitReview.addEventListener('click', async () => {
             coordinates: {
                 lat: userLocation[0],
                 lng: userLocation[1]
+            },
+            review_speed_test: {
+                "download":downloadEl.innerText,
+                "upload":uploadEl.innerText,
+                "ping":pingEl.innerText,
             }
         })
     })
     let data = await Response.json()
-    alert(data.massage);
+    alert(data.message);
     
 
     // Закрываем модальное окно и очищаем форму
@@ -154,24 +253,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
         let userData = await userResponse.json()
         console.log(userData);
+        if (userData.error) {
+            user_id = null
+            user_telephone = null
+            return;
+        }
         user_id = userData.user.user_id;
         user_telephone = userData.user.user_telephone;
         document.querySelector("#phoneNumberComment").innerHTML = user_telephone;
-
-    
 })
-
-// reviewsData.reviews.forEach(review => {
-//     const reviewPlacemark = new ymaps.Placemark([review.coordinates.lat, review.coordinates.lng], {
-//         balloonContent: `
-//             <div class="p-2 overflow-y-scroll h-auto ">
-//                 <h3 class="font-bold mb-1">Отзыв</h3>
-//                 <p class="mb-2">${review.review_text}</p>
-//                 <p class="text-sm text-gray-600">Телефон: ${review.user_telephone}</p>
-//             </div>
-//         `
-//     }, {
-//         preset: 'islands#greenIcon'
-//     });
-//     map.geoObjects.add(reviewPlacemark);
-// })

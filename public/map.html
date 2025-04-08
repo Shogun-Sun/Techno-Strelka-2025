@@ -60,7 +60,7 @@
             <div class="mb-6">
                 <label class="block text-gray-700 mb-2">Ваш телефон</label>
                 <div id="phoneNumberComment" class="flex flex-row gap-3 items-center text-3xl font-bold text-gray-950">
-                   +7 950 199 70 85
+                   +7 000 000 00 00
                 </div>
             </div>
             
@@ -70,6 +70,26 @@
                 <textarea id="reviewText" rows="4" class="w-full h-fit max-h-70 min-h-10 px-4 py-3 border rounded-xl
                  focus:ring-2 focus:ring-gray-500 text-lg text-gray-950 p-2 font-semibold
                  focus:border-transparent" placeholder="Напишите ваш отзыв здесь..." autosi></textarea>
+            </div>
+
+            <button id="startTest" class="mb-6 w-full flex items-center justify-center text-xl font-semibold bg-gray-950 text-white py-3 rounded-xl hover:bg-gray-800 
+            transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+                Пройти тест скорости
+            </button>
+
+            <div id="results" class="hidden space-y-3 text-left">
+                <div class="flex justify-between">
+                    <span class="font-medium">Скачивание:</span>
+                    <span id="download-speed" class="font-bold">0</span> Mbps
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium">Отправка:</span>
+                    <span id="upload-speed" class="font-bold">0</span> Mbps
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium">Пинг:</span>
+                    <span id="ping" class="font-bold">0</span> ms
+                </div>
             </div>
             
             <!-- Кнопка отправки -->
