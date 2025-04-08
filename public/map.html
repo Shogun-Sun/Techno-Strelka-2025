@@ -38,7 +38,7 @@
                 <div class="w-full h-full bg-white rounded-lg shadow-sm"></div>               
             </div>
         </div>
-        <button id="login" class="text-base font-bold text-black bg-white rounded-lg px-3 py-1 hover:bg-gray-100">
+        <button id="login" onclick="window.location.href = '/loginPage';" class="text-base font-bold text-black bg-white rounded-lg px-3 py-1 hover:bg-gray-100">
             Войти
         </button>
     </nav>
@@ -59,7 +59,7 @@
             
             <div class="mb-6">
                 <label class="block text-gray-700 mb-2">Ваш телефон</label>
-                <div class="flex flex-row gap-3 items-center text-3xl font-bold text-gray-950">
+                <div id="phoneNumberComment" class="flex flex-row gap-3 items-center text-3xl font-bold text-gray-950">
                    +7 950 199 70 85
                 </div>
             </div>
@@ -79,163 +79,6 @@
             </button>
         </div>
     </div>
-
-    <script>
-        // Инициализация карты
-        ymaps.ready(init);
-        
-        let map;
-        let userLocation = [55.751574, 37.573856];
-        let userPlacemark = null;
-        
-        function init() {
-            map = new ymaps.Map("map", {
-                center: [55.751574, 37.573856], // Москва по умолчанию
-                zoom: 12
-            });
-            
-            // Определение местоположения пользователя
-            ymaps.geolocation.get({
-                provider: 'browser',
-                mapStateAutoApply: true
-            }).then(function (result) {
-                userLocation = result.geoObjects.get(0).geometry.getCoordinates();
-                map.setCenter(userLocation, 15);
-                
-                // Добавляем метку пользователя
-                userPlacemark = new ymaps.Placemark(userLocation, {}, {
-                    preset: 'islands#blueDotIcon'
-                });
-                map.geoObjects.add(userPlacemark);
-            });
-        }
-        
-        // Элементы интерфейса
-        const addReviewBtn = document.getElementById('addReviewBtn');
-        const reviewModal = document.getElementById('reviewModal');
-        const closeModal = document.getElementById('closeModal');
-        const submitReview = document.getElementById('submitReview');
-        const phoneInputs = [
-            document.getElementById('phone1'),
-            document.getElementById('phone2'),
-            document.getElementById('phone3'),
-            document.getElementById('phone4'),
-            document.getElementById('phone5'),
-            document.getElementById('phone6'),
-            document.getElementById('phone7'),
-            document.getElementById('phone8'),
-            document.getElementById('phone9'),
-            document.getElementById('phone10')
-        ];
-        const reviewText = document.getElementById('reviewText');
-        
-        // Открытие модального окна
-        addReviewBtn.addEventListener('click', () => {
-            reviewModal.classList.remove('hidden');
-            reviewModal.classList.add('flex');
-            phoneInputs[0].focus();
-        });
-        
-        // Закрытие модального окна
-        closeModal.addEventListener('click', () => {
-            reviewModal.classList.add('hidden');
-            reviewModal.classList.remove('flex');
-        });
-        
-        // Обработка ввода телефона
-        phoneInputs.forEach((input, index) => {
-            input.addEventListener('input', function() {
-                this.value = this.value.replace(/\D/g, '');
-                if (this.value.length === 1 && index < phoneInputs.length - 1) {
-                    phoneInputs[index + 1].focus();
-                }
-            });
-            
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace') {
-                    if (this.value.length === 0 && index > 0) {
-                        phoneInputs[index - 1].focus();
-                    } else if (this.value.length > 0) {
-                        this.value = '';
-                    }
-                }
-            });
-        });
-        
-        // Отправка отзыва
-        submitReview.addEventListener('click', () => {
-            const phone = '7' + phoneInputs.map(input => input.value).join('');
-            const review = reviewText.value.trim();
-            
-            if (phone.length !== 11) {
-                alert('Пожалуйста, введите корректный номер телефона');
-                return;
-            }
-            
-            if (!review) {
-                alert('Пожалуйста, напишите ваш отзыв');
-                return;
-            }
-            
-            if (!userLocation) {
-                alert('Не удалось определить ваше местоположение');
-                return;
-            }
-            
-            // Создаем метку с отзывом на карте
-            const reviewPlacemark = new ymaps.Placemark(userLocation, {
-                balloonContent: `
-                    <div class="p-2 overflow-y-scroll h-auto ">
-                        <h3 class="font-bold mb-1">Отзыв</h3>
-                        <p class="mb-2">${review}</p>
-                        <p class="text-sm text-gray-600">Телефон: +${phone}</p>
-                    </div>
-                `
-            }, {
-                preset: 'islands#greenIcon'
-            });
-            
-            map.geoObjects.add(reviewPlacemark);
-            reviewPlacemark.balloon.open();
-            
-            // Здесь должна быть реальная отправка данных на сервер
-            console.log('Отправка отзыва:', {
-                phone: phone,
-                review: review,
-                coordinates: userLocation
-            });
-            
-            // Закрываем модальное окно и очищаем форму
-            reviewModal.classList.add('hidden');
-            reviewModal.classList.remove('flex');
-            phoneInputs.forEach(input => input.value = '');
-            reviewText.value = '';
-            
-            // Показываем уведомление
-            alert('Спасибо за ваш отзыв! Он отмечен на карте.');
-        });
-    </script>
-
-    <script>
-        const coverageRadio = document.getElementById('coverage');
-        const reviewsRadio = document.getElementById('reviews');
-        const navIndicator = document.getElementById('navIndicator');
-
-        function updateIndicator(){
-            
-            if(coverageRadio.checked){
-                navIndicator.classList.remove('right-3');
-                navIndicator.classList.add('left-3');   
-            }
-            if(reviewsRadio.checked){
-                navIndicator.classList.remove('left-3');
-                navIndicator.classList.add('right-3');
-            }
-        }
-
-        coverageRadio.addEventListener('change', updateIndicator);
-        reviewsRadio.addEventListener('change', updateIndicator);
-        
-    </script>
+    <script src="./js/map.js"></script>
 </body>
 </html>

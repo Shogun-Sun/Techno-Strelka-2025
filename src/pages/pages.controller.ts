@@ -14,6 +14,12 @@ export class PagesController {
     res.sendFile(this.pagePath('login_reg.html'));
   }
 
+  @ApiOperation({ summary: 'Главная страница' })
+  @Get('map')
+  map(@Res() res: Response) {
+    res.sendFile(this.pagePath('map.html'));
+  }
+
   pagePath(file: string) {
     return join(__dirname, '..', '..', 'public', file);
   }
