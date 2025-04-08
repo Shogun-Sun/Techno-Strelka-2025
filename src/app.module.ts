@@ -9,6 +9,7 @@ import * as session from 'express-session';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Session } from './database/models/session.model';
 import { PagesModule } from './pages/pages.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PagesModule } from './pages/pages.module';
     SessionModule,
     DatabaseModule,
     PagesModule,
+    AdminModule,
   ],
   controllers: [],
   providers: [],

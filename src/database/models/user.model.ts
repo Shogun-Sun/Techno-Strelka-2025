@@ -8,6 +8,7 @@ import {
   PrimaryKey,
   AllowNull,
   HasMany,
+  Default,
 } from 'sequelize-typescript';
 import { Session } from './session.model';
 
@@ -29,6 +30,11 @@ export class User extends Model {
   @AllowNull(false)
   @Column(DataType.STRING)
   declare user_email: string;
+
+  @Default('user')
+  @AllowNull(false)
+  @Column(DataType.ENUM('user', 'admin'))
+  declare user_role: 'user' | 'admin';
 
   @HasMany(() => Session)
   declare sessions: Session[];
