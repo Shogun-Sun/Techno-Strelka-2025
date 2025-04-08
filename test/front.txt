@@ -1,0 +1,17 @@
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script id="selected-user-template" type="text/x-handlebars-template">
+
+</script>
+
+const socket = io('http://localhost:3000');
+
+socket.on('connect', () => {
+  console.log('Connected to server');
+});
+
+socket.on('message', (data) => {
+  console.log('Received message:', data);
+});

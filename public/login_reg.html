@@ -14,7 +14,7 @@
             <svg class="h-5 w-6 md:h-6 md:w-7 stroke-1 fill-yellow-400 group-hover/nav:fill-white lg:group-hover/nav:fill-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path d="M512 96c0 50.2-59.1 125.1-84.6 155c-3.8 4.4-9.4 6.1-14.5 5L320 256c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c53 0 96 43 96 96s-43 96-96 96l-276.4 0c8.7-9.9 19.3-22.6 30-36.8c6.3-8.4 12.8-17.6 19-27.2L416 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0c-53 0-96-43-96-96s43-96 96-96l39.8 0c-21-31.5-39.8-67.7-39.8-96c0-53 43-96 96-96s96 43 96 96zM117.1 489.1c-3.8 4.3-7.2 8.1-10.1 11.3l-1.8 2-.2-.2c-6 4.6-14.6 4-20-1.8C59.8 473 0 402.5 0 352c0-53 43-96 96-96s96 43 96 96c0 30-21.1 67-43.5 97.9c-10.7 14.7-21.7 28-30.8 38.5l-.6 .7zM128 352a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM416 128a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/>
             </svg>
-            <p class="text-base text-slate-900 font-semibold pt-1 dark:text-yellow-400 group-hover/nav:text-white  md:text-xl md:pt-0 lg:group-hover/nav:text-slate-900 lg:group-hover/nav:dark:text-yellow-500">TOUROU</p>
+            <p class="text-base text-slate-900 font-semibold pt-1 dark:text-yellow-400 group-hover/nav:text-white  md:text-xl md:pt-0 lg:group-hover/nav:text-slate-900 lg:group-hover/nav:dark:text-yellow-500">Den</p>
         </div> 
 
         <div class="lg:bg-white w-12 h-10 top-[7px]  lg:top-[10px] right-5 rounded-3xl fixed z-[41] flex items-center justify-center
@@ -65,11 +65,13 @@
                             <input id="login" type ="email" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 focus:border-yellow-500
                             focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 outline-none
                             invalid:border-pink-700 invalid:text-pink-700">
+                            <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                         </div>
                         <div class="flex flex-col justify-around md:justify-between">
                             <label for="password" class="text-lg mb-2 text-slate-900 md:mb-3 md:text-xl dark:text-gray-300">Password</label>
                             <input id="password" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 focus:border-yellow-500
                             focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 outline-none">
+                            <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                         </div>
                     </div>
                     <div id="form_footer" class="h-20 flex flex-col items-center justify-between px-5 w-10/12">
@@ -110,31 +112,37 @@
                         <label for="email" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Email</label>
                         <input id="email" type="email" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                        <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="Surname" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Фамилия</label>
                         <input id="Surname" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                         <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="Name" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Имя</label>
                         <input id="Name" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                        <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="Patronimyc" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Отчество</label>
                         <input id="Patronimyc" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                        <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="reg_password" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Пароль</label>
                         <input id="reg_password" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                        <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                     <div class="h-20 flex flex-col justify-around">
                         <label for="reg_password_2" class="text-lg text-slate-900 md:text-xl dark:text-gray-300">Подтвердите пароль</label>
                         <input id="reg_password_2" type="password" class="w-full h-8 border border-gray-500 rounded-10 md:h-9 px-2 outline-none focus:border-yellow-500
                          focus:invalid:border-pink-700 focus:invalid:text-pink-600 dark:text-slate-300 dark:bg-slate-800 py-1">
+                        <div class="error-message text-pink-600 text-sm mt-1 hidden"></div>
                     </div>
                 </div>
 
@@ -153,8 +161,7 @@
         </div>
     </main>
     <script src="./js/darkmode.js"></script>
-    <script src="./js/modal.js">
-        
-    </script>
+    <script src="./js/modal.js"></script>
+    <script src="./js/login.js"></script>
 </body>
 </html>
