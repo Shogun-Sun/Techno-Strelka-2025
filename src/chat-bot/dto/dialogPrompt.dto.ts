@@ -6,7 +6,7 @@ export class DialogPromptDto {
     example: 'Привет',
     description: 'Запрос',
   })
-  @IsString()
-  @IsNotEmpty()
+  @IsString({ message: 'Запрос должен быть строкой' })
+  @IsNotEmpty({ message: 'Запрос не может быть пустым' })
   prompt: string;
 }

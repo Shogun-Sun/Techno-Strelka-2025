@@ -12,6 +12,7 @@ import { PagesModule } from './pages/pages.module';
 import { AdminModule } from './admin/admin.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { GooglecloudModule } from './chat-bot/chat-bot.module';
+import { ChipsModule } from './chips/chips.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { GooglecloudModule } from './chat-bot/chat-bot.module';
     AdminModule,
     ReviewsModule,
     GooglecloudModule,
+    ChipsModule,
   ],
   controllers: [],
   providers: [],

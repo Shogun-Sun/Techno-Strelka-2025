@@ -18,12 +18,11 @@
             async (position) => {
               const lat = position.coords.latitude;
               const lon = position.coords.longitude;
-              const coords = [lat, lon];
+              const coords = [56.316309, 43.927515];
 
               try {
                 // Получаем адрес с помощью Яндекс API
                 const addressResult = await ymaps.geocode(coords);
-                console.log(addressResult);
 
                 // Получаем первый геообъект (адрес)
                 const firstGeoObject = addressResult.geoObjects.get(0);
@@ -37,10 +36,29 @@
                     }
                   });
 
-                  // Выводим только район в одном алерте
-                  console.log(district);
+                  // Сообщение
+                  fetch('http://localhost:3000/chips/get', {
+                    method: 'POST',
+                    headers: {
+                      'Accept': '*/*',
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      chip_district: district,
+                    }),
+                  })
+                  .then(response => {
+                    if (!response.ok) {
+                      return response.json().then(err => { throw new Error(err.message); });
+                    }
+                    return response.json();
+                  })
+                  .then(data => alert(data.chip_description))
+                  .catch(error => console.log(error.message));
+                  
+                  
                 } else {
-                  alert('Не удалось найти адрес.');
+                  alert('Не удалось найти район.');
                 }
               } catch (err) {
                 console.error('Ошибка при получении данных геокодирования:', err);

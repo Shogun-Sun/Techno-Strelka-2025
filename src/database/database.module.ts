@@ -17,6 +17,7 @@ import { Chip } from './models/chips.model';
       models: [User, Session, Review, Chip],
       logging: false,
     }),
+    SequelizeModule.forFeature([Chip]),
   ],
   controllers: [],
   providers: [DatabaseService],

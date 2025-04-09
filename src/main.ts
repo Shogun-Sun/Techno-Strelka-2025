@@ -12,6 +12,7 @@ async function bootstrap() {
   app.useStaticAssets(PUBLIC_PATH);
   app.setViewEngine('hbs');
   app.setBaseViewsDir(VIEWS_PATH);
+  app.enableCors();
 
   if (process.env.PROJECT_STATUS === 'dev') {
     const swaggerDoc = new DocumentBuilder()
