@@ -304,11 +304,12 @@ function getOffices() {
         clusterOpenBalloonOnClick: true,
         clusterBalloonContentLayout: 'cluster#balloonCarousel',
         clusterBalloonItemContentLayout: ymaps.templateLayoutFactory.createClass(
-            '<div class="cluster-item">' +
-                '{{ properties.balloonContentHeader }}<br>' +
-                '{{ properties.balloonContentBody }}<br>' +
-                'Услуги: {{ properties.balloonContentFooter }}' +
-            '</div>'
+            `<div class="cluster-item flex flex-col gap-2 overflow-y-auto">` +
+                `<div class="text-black text-xl font-Halvar">{{ properties.balloonContentHeader }}<div>` +
+                `<div class="text-black text-lg font-Rooftop">{{ properties.balloonContentBody }}<div>` +
+                `<div class="text-black text-xl font-Halvar">Услуги:</div>`+
+                `<div class="text-black text-lg font-Rooftop">{{ properties.balloonContentFooter }}<div>` +
+            `</div>`
         ),
         clusterIcons: [
             {
@@ -339,7 +340,7 @@ function getOffices() {
                     {
                         balloonContentHeader: location.city,
                         balloonContentBody: location.address,
-                        balloonContentFooter: `<b>Услуги:</b> ${location.services.map((s) => s.name).join(', ')}`,
+                        balloonContentFooter: `${location.services.map((s) => s.name).join(', ')}`,
                     },
                     {
                         iconLayout: 'default#image',
