@@ -11,13 +11,11 @@ socket.on('connect', () => {
 });
 
 socket.on('message', (data) => {
-  console.log(isSending)
   if (data.sender === 'Tele2Bot') {
     if (typingIndicator) {
       typingIndicator.remove();
       typingIndicator = null;
     }
-
     if (data.redirect) {
       appendBotMessage(data.message);
       setTimeout(() => {
@@ -81,7 +79,6 @@ function showTypingIndicator() {
   if (typingIndicator) {
     typingIndicator.remove();
   }
-
   typingIndicator = document.createElement('div');
   typingIndicator.className = 'flex justify-start mb-4';
   typingIndicator.innerHTML = `

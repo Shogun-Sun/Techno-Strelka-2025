@@ -24,12 +24,6 @@ inputs.forEach((input, index) => {
         if (this.value.length === 1 && index < inputs.length - 1) {
             inputs[index + 1].focus();
         }
-        
-        // Если это последнее поле и оно заполнено
-        if (index === inputs.length - 1 && this.value.length === 1) {
-            // Можно добавить обработку завершения ввода
-            console.log('Номер полностью введён');
-        }
     });
 
     // Обработка Backspace
