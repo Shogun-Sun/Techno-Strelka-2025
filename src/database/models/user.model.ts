@@ -8,7 +8,6 @@ import {
   PrimaryKey,
   AllowNull,
   HasMany,
-  Default,
 } from 'sequelize-typescript';
 import { Session } from './session.model';
 import { Review } from './reviews.model';
