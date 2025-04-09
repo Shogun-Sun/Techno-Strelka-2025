@@ -5,7 +5,6 @@ let user_telephone;
 let map;
 let userLocation = null; // Изначально null
 let userPlacemark = null;
-document.getElementById('chat_bot').addEventListener('click', () => { window.location.href = "/chatbot"})
 
 const balloonContent_template = document.getElementById("balloonContent_template").innerHTML;
 window.balloonContent_template = Handlebars.compile(balloonContent_template);
@@ -251,11 +250,22 @@ function zoomControl() {
     }
 }
 
-document.querySelector("#openChat").addEventListener("click", () => {
-    document.querySelector("#chatArea").classList.toggle("right-0")
-    document.querySelector("#chatArea").classList.toggle("-right-130")
-    document.querySelector("#openChat").innerText = document.querySelector("#openChat").innerText == ">" ? "<" : ">"
-})
+const open_chat = document.querySelector("#openChat");
+const chat_area = document.querySelector("#chatArea");
+
+// Инициализация - скрываем чат полностью за пределами экрана
+chat_area.classList.add("translate-x-full");
+
+open_chat.addEventListener("click", () => {
+    // Переключение видимости чата
+    chat_area.classList.toggle("translate-x-full");
+    chat_area.classList.toggle("translate-x-0");
+    
+    // Анимация кнопки
+    open_chat.classList.toggle('left-2');
+    open_chat.classList.toggle('-left-15');
+    open_chat.innerText = open_chat.innerText == "<" ? ">" : "<";
+});
 
 // Элементы интерфейса
 const addReviewBtn = document.getElementById('addReviewBtn');

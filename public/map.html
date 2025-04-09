@@ -8,19 +8,14 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=cfb17578-6c78-4dbc-9099-c50949c99d19&lang=ru_RU" type="text/javascript"></script>
 </head>
 
-<body class=" antialiased selection:bg-pink-500 selection:text-white"> 
-    <div id="chatArea" class="w-140 h-screen pt-19 z-200 fixed top-0 right-0 flex items-center
-    gap-8 bg-white duration-300">
-        <button id="openChat" class="px-4 py-2 bg-black text-white">
-            >
+<body class=" antialiased selection:bg-pink-500 selection:text-white relative overflow-x-hidden"> 
+    <div id="chatArea" class="w-full sm:w-140 h-screen pt-19 z-200 absolute top-0 right-0 flex items-center gap-2 pl-20 pr-4 bg-white duration-500 transition-transform ease-in-out translate-x-full">
+        <button id="openChat" class="px-5 py-3 bg-black text-white rounded-full text-xl font-Halvar border absolute -left-15 transition-all duration-500">
+            <
         </button>
-        <iframe 
-        class="w-full h-full rounded-5xl bg-white"
-        id="inlineFrameExample"
-        title="Inline Frame Example"
-        src="http://localhost:3000/chatbot">
-    </iframe>
+        <iframe class="w-full h-full rounded-5xl bg-white" id="inlineFrameExample" title="Inline Frame Example" src="http://localhost:3000/chatbot"></iframe>
     </div>
+
 
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="fixed top-20 right-4 z-1000 space-y-3 w-80"></div>
@@ -64,10 +59,6 @@
         <button id="addReviewBtn" class=" bg-black text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors 
         duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar">
             + Добавить отзыв
-        </button>
-        <button id="chat_bot" class="bg-black text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors 
-        duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar ">
-            Чат-бот
         </button>
     </div>
 
