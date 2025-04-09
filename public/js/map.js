@@ -593,5 +593,94 @@ document.addEventListener("DOMContentLoaded", async () => {
     user_telephone = userData.user.user_telephone;
     document.querySelector("#phoneNumberComment").textContent = user_telephone;
     
+    
+
+    function appendBotMessage(text) {
+        let iframeDoc = document.querySelector("iframe").contentWindow.document;
+        let chat = iframeDoc.querySelector("#chat")
+        console.log(chat)
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'flex justify-start mb-4';
+        messageDiv.innerHTML = `
+          <div class="bg-gray-100 text-black rounded-xl px-4 py-2 max-w-xs md:max-w-md">
+            <p class="font-medium font-Halvar">Tele2Bot</p>
+            <p class="font-Rooftop">${text}</p>
+          </div>
+        `;
+        chat.appendChild(messageDiv);
+        chat.scrollTop = chat.scrollHeight;
+      }
+
+    ymaps.ready(() => {
+        // Проверяем, поддерживает ли браузер геолокацию
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const lat = position.coords.latitude;
+              const lon = position.coords.longitude;
+              const coords = [56.316309, 43.927515];
+
+              try {
+                // Получаем адрес с помощью Яндекс API
+                const addressResult = await ymaps.geocode(coords);
+
+                // Получаем первый геообъект (адрес)
+                const firstGeoObject = addressResult.geoObjects.get(0);
+
+                if (firstGeoObject) {
+                  const components = firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.Address.Components');
+                  let district = 'Не удалось найти район';
+                  components.forEach(component => {
+                    if (component.kind === 'district') {
+                      district = component.name;
+                    }
+                  });
+
+                  // Сообщение
+                  fetch('http://localhost:3000/chips/get', {
+                    method: 'POST',
+                    headers: {
+                      'Accept': '*/*',
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      chip_district: district,
+                    }),
+                  })
+                  .then(response => {
+                    if (!response.ok) {
+                      return response.json().then(err => { throw new Error(err.message); });
+                    }
+                    return response.json();
+                  })
+                  .then(data => {
+                    appendBotMessage(data.chip_description)
+                    document.querySelector("#openChat").click()
+                  })
+                  .catch(error => console.log(error.message));
+                  
+                  
+                } else {
+                //   alert('Не удалось найти район.');
+                }
+              } catch (err) {
+                console.error('Ошибка при получении данных геокодирования:', err);
+                showToast('Не удалось получить информацию о вашем местоположении.', "error")
+              }
+            },
+            (error) => {
+              console.error('Ошибка геолокации:', error);
+              showToast('Не удалось получить координаты пользователя.', "error");
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 0
+            }
+          );
+        } else {
+          showToast('Геолокация не поддерживается этим браузером.', "error");
+        }
+      });
 
 })
