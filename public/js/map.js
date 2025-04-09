@@ -14,6 +14,7 @@ const reviews = document.getElementById('reviews');
 
 // Инициализация карты
 ymaps.ready(init);
+var layers = {};
 
 function init() {
     map = new ymaps.Map("map", {
@@ -51,49 +52,58 @@ function init() {
         if (coverage.checked) {
             map.geoObjects.removeAll()
             addSelfpoint()
+            document.getElementById("checkbox_2g").checked = true;
+            document.getElementById("checkbox_3g").checked = true;
+            document.getElementById("checkbox_4g").checked = true;
+            document.getElementById("checkbox_lte450").checked = true;
+            document.getElementById('filt_cover').classList.remove('hidden');
             getCoverage()
         }
     })
 
     function getCoverage() {
-        let Testdata = [
-            {
-                
-            }
-        ]
+        zoomControl();
+        map.events.add('boundschange', zoomControl); 
 
-        var myPlacemark = new ymaps.Placemark(userLocation, {
-            hintContent: 'Центр круга',
-            balloonContent: 'Это центр круга радиусом 10 км'
+        layers["2g"] = new ymaps.Layer('https://nnov.t2.ru/maps/_2g/%z/%x/%y.png', {
+            tileTransparent: true, // Прозрачность тайлов
+            notFoundTile: 'https://nnov.t2.ru/maps/_2g/empty.png' // Путь к изображению для отсутствующих тайлов
+        });
+        
+        layers["3g"] = new ymaps.Layer('https://nnov.t2.ru/maps/_3g/%z/%x/%y.png', {
+            tileTransparent: true,
+            notFoundTile: 'https://nnov.t2.ru/maps/_2g/empty.png'
         });
 
-        map.geoObjects.add(myPlacemark);
-
-        var myCircle = new ymaps.Circle([
-            // Координаты центра круга
-            userLocation,
-            // Радиус круга
-            500
-        ], {
-            // Свойства круга
-            balloonContent: "Круг радиусом 10 км",
-            hintContent: "10 км от центра"
-        }, {
-            // Опции круга
-            fillColor: "#7df9ff77",
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.7,
-            strokeWidth: 2
+        layers["4g"] = new ymaps.Layer('https://nnov.t2.ru/maps/_4g/%z/%x/%y.png', {
+            tileTransparent: true,
+            notFoundTile: 'https://nnov.t2.ru/maps/_2g/empty.png'
         });
 
-        // Добавляем круг на карту
-        map.geoObjects.add(myCircle);
+        layers["lte450"] = new ymaps.Layer('https://nnov.t2.ru/maps/_skylink/%z/%x/%y.png', {
+            tileTransparent: true,
+            notFoundTile: 'https://nnov.t2.ru/maps/_2g/empty.png'
+        });
 
-    }
+        // Добавляем все слои на карту
+        for (var key in layers) {
+            map.layers.add(layers[key]);
+        }
+
+        // Обработчик изменений в чекбоксах
+        document.getElementById("checkbox_2g").addEventListener("change", toggleLayer);
+        document.getElementById("checkbox_3g").addEventListener("change", toggleLayer);
+        document.getElementById("checkbox_4g").addEventListener("change", toggleLayer);
+        document.getElementById("checkbox_lte450").addEventListener("change", toggleLayer);
+    }    
 
     reviews.addEventListener("change", () => {
         if (reviews.checked) {
-            map.geoObjects.removeAll()
+            for (var key in layers) {
+                map.layers.remove(layers[key]);
+            }
+            document.getElementById('filt_cover').classList.add('hidden');
+            map.geoObjects.removeAll();
             addSelfpoint()
             getReviews()
         }
@@ -201,7 +211,40 @@ function init() {
     document.getElementById('reviews').click()
 }
 
+function toggleLayer() {
+    if (document.getElementById("checkbox_2g").checked) {
+        map.layers.add(layers["2g"]);
+    } else {
+        map.layers.remove(layers["2g"]);
+    }
 
+    if (document.getElementById("checkbox_3g").checked) {
+        map.layers.add(layers["3g"]);
+    } else {
+        map.layers.remove(layers["3g"]);
+    }
+
+    if (document.getElementById("checkbox_4g").checked) {
+        map.layers.add(layers["4g"]);
+    } else {
+        map.layers.remove(layers["4g"]);
+    }
+
+    if (document.getElementById("checkbox_lte450").checked) {
+        map.layers.add(layers["lte450"]);
+    } else {
+        map.layers.remove(layers["lte450"]);
+    }
+}
+
+function zoomControl() {
+    const zoom = map.getZoom();
+    console.log(zoom);
+
+    if (zoom > 10) {
+        map.setZoom(10); // Минимальный зум
+    }
+}
 
 // Элементы интерфейса
 const addReviewBtn = document.getElementById('addReviewBtn');
