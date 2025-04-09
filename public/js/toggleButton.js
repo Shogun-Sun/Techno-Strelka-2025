@@ -1,7 +1,6 @@
 const coverageRadio = document.getElementById('coverage');
 const reviewsRadio = document.getElementById('reviews');
 const navIndicator = document.getElementById('navIndicator');
-console.log(document.documentElement.clientWidth)
 
 function updateIndicator(){
     if(document.documentElement.clientWidth > 648){

@@ -123,8 +123,6 @@ function init() {
     }
 
     document.getElementById('reviews').click()
-    addSelfpoint();
-    getReviews();
 }
 
 
@@ -223,12 +221,17 @@ submitReview.addEventListener('click', async () => {
     // Создаем метку с отзывом на карте
     const reviewPlacemark = new ymaps.Placemark(userLocation, {
         hintContent: 'Комментарий пользователя',
-        balloonContent: `
-            <div class="p-2 h-auto flex flex-col gap-3">
-                <p class="text-base text-black font-Halvar">Телефон: ${user_telephone}</p>
-                <p class="font-Rooftop text-sm text-gray-600 font-medium">${review.review_text}</p>   
-            </div>
-        `
+        balloonContent: window.balloonContent_template({
+            "review_text": review,
+            "review_speed_test": {
+                "download":downloadEl.innerText,
+                "upload":uploadEl.innerText,
+                "ping":pingEl.innerText,
+            },
+            "user": {
+                "user_telephone": user_telephone,
+            }
+        })
     }, {
         iconLayout: 'default#image',
         iconImageHref: '/pictures/mobile-map.png',
