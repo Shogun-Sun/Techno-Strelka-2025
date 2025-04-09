@@ -108,19 +108,95 @@ function init() {
         })
         .then(reviewsResponse => reviewsResponse.json())
         .then(reviewsData => {
-            reviewsData.data.forEach(review => {
-                let reviewPlacemark = new ymaps.Placemark([review.coordinates.lat, review.coordinates.lng], {
-                    hintContent: `Комментарий пользователя ${user_telephone}`,
-                    balloonContent: window.balloonContent_template(review)
-                }, {
-                    iconLayout: 'default#image',
-                    iconImageHref: '/pictures/mobile-map.png',
-                });
+            // Создаем кластеризатор с кастомным балуном
+            const clusterer = new ymaps.Clusterer({
+                preset: 'islands#invertedVioletClusterIcons',
+                clusterDisableClickZoom: true,
+                clusterOpenBalloonOnClick: true,
+                clusterBalloonContentLayout: 'cluster#balloonCarousel', // Используем карусель
+                // clusterBalloonItemContentLayout: 'balloonContent_template', // Используем наш шаблон
+                clusterBalloonPanelMaxMapArea: 0, // Не ограничиваем область карты
+                clusterBalloonContentLayoutWidth: 300, // Ширина балуна
+                clusterBalloonContentLayoutHeight: 200, // Высота балуна
+                clusterBalloonPagerSize: 5, // Количество видимых элементов в пагинаторе
+                clusterBalloonPagerVisible: true, // Показываем пагинатор
+                
+                // Настройки иконок кластера
+                clusterIconLayout: 'default#pieChart',
+                clusterIconPieChartRadius: 25,
+                clusterIconPieChartCoreRadius: 10,
+                clusterIconPieChartStrokeWidth: 3,
+                
+                // Параметры группировки
+                groupByCoordinates: false,
+                gridSize: 64,
+                clusterMinClusterSize: 2
+            }),
+            getPointData = function (index) {
+                return {
+                    balloonContentHeader: '<font size=3><b><a target="_blank" href="https://yandex.ru">Здесь может быть ваша ссылка</a></b></font>',
+                    balloonContentBody: '<p>Ваше имя: <input name="login"></p><p>Телефон в формате 2xxx-xxx:  <input></p><p><input type="submit" value="Отправить"></p>',
+                    balloonContentFooter: '<font size=1>Информация предоставлена: </font> балуном <strong>метки ' + index + '</strong>',
+                    clusterCaption: 'метка <strong>' + index + '</strong>'
+                };
+            };
+    
+            // Массив для хранения меток
+            const placemarks = [];
             
-                map.geoObjects.add(reviewPlacemark);
-            }); 
-        })
+            reviewsData.data.forEach(review => {
+                let reviewPlacemark = new ymaps.Placemark(
+                    [review.coordinates.lat, review.coordinates.lng], 
+                    {
+                        hintContent: `Комментарий пользователя ${review.user.user_telephone}`,
+                        balloonContent: window.balloonContent_template(review),
+                        // Добавляем все данные отзыва в свойства метки
+                        reviewData: review
+                    },
+                    {
+                        iconLayout: 'default#image',
+                        iconImageHref: '/pictures/mobile-map.png',
+                        iconImageSize: [30, 30],
+                        iconImageOffset: [-15, -15]
+                    }
+                );
+                
+                placemarks.push(reviewPlacemark);
+            });
+            
+            console.log(reviewsData)
+            // Добавляем метки в кластеризатор
+            clusterer.add(placemarks);
+            
+            // Очищаем карту и добавляем кластеризатор
+            map.geoObjects.removeAll();
+            map.geoObjects.add(clusterer);
+            
+            // Добавляем метку пользователя (если нужно)
+            if (userPlacemark) {
+                map.geoObjects.add(userPlacemark);
+            }
+    
+            // Обработчик клика по кластеру
+            clusterer.events.add('click', function (e) {
+                const target = e.get('target');
+                
+                // Проверяем, является ли target кластером
+                if (target instanceof ymaps.Clusterer) {
+                    const cluster = target;
+                    const geoObjects = cluster.getGeoObjects();
+                    
+                    // Если в кластере только одна метка, открываем ее балун
+                    if (geoObjects.length === 1) {
+                        geoObjects[0].balloon.open();
+                        return;
+                    }
+                } 
+            });
+        });
     }
+
+// ... (остальной код остается без изменений)
 
     document.getElementById('reviews').click()
 }
