@@ -13,6 +13,15 @@ socket.on('message', (data) => {
       typingIndicator.remove();
       typingIndicator = null;
     }
+
+    //Обработка ответа, если бот не может помочь пользователю
+    if (data.redirect) {
+      appendMessage(`${data.sender}: ${data.message}`);
+      setTimeout(() => {
+        appendMessage(`${data.sender}: Перейдите по следующей ссылке: <a href="https://lk.t2.ru/lk" target="_blank">https://lk.t2.ru/lk</a>`);
+      }, 4000); 
+      return;
+    }
   }
   appendMessage(`${data.sender}: ${data.message}`);
 });

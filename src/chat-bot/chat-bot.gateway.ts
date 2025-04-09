@@ -31,8 +31,6 @@ export class ChatBotGateway
   async handleMessage(
     @MessageBody() data: { sender: string; message: string },
   ): Promise<void> {
-    console.log(`Сообщение от ${data.sender}: ${data.message}`);
-
     this.server.emit('message', data);
 
     const prompt: DialogPromptDto = { prompt: data.message };
@@ -40,7 +38,8 @@ export class ChatBotGateway
       const reply = await this.chatBotService.accessGeminiApi(prompt);
       this.server.emit('message', {
         sender: 'Tele2Bot',
-        message: reply,
+        message: reply.message,
+        redirect: reply.redirect,
       });
     } catch (e) {
       this.server.emit('message', {
