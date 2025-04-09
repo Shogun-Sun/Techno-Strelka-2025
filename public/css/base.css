@@ -61,30 +61,20 @@ input.invalid:focus {
 
 /* Стили для кастомных радио-кнопок */
 .custom-checkbox {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #999;
-    border-radius: 50%;
-    outline: none;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
-  }
-  
-  .custom-checkbox:checked {
-    border-color: #FF3495;
-  }
-  
-  .custom-checkbox:checked::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 12px;
-    height: 12px;
-    background-color: #FF3495;
-    border-radius: 50%;
-  }
+    @apply appearance-none w-5 h-5 border-2 border-gray-400 rounded-full outline-none cursor-pointer relative transition-all duration-300 ease-in-out checked:border-pink-500;
+}
+
+.custom-checkbox:checked {
+    @apply border-pink-500;
+}
+
+.custom-checkbox:checked::before {
+    @apply content-[''] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-pink-500 rounded-full;
+}
+
+.sp{
+    @apply block text-lg font-Rooftop text-black basis-10/12 hover:text-pink-700
+}
+.lab{
+    @apply flex flex-row gap-4 items-center px-2 py-1 bg-white rounded-lg border border-black cursor-pointer transition
+}

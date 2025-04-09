@@ -284,7 +284,8 @@ function getOffices() {
 // Добавьте эту кнопку в ваш интерфейс (например, рядом с кнопкой "Добавить отзыв")
 const openOfficesModalBtn = document.createElement('button');
 openOfficesModalBtn.id = 'openOfficesModalBtn';
-openOfficesModalBtn.className = 'bg-black text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar';
+openOfficesModalBtn.className = 'bg-black text-lg text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors duration-300 \
+focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar';
 openOfficesModalBtn.textContent = 'Фильтр офисов';
 document.querySelector('.fixed.bottom-8.right-8.z-10.flex.flex-col.gap-4').appendChild(openOfficesModalBtn);
 
