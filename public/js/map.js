@@ -215,8 +215,6 @@ function init() {
         });
     }
 
-// ... (остальной код остается без изменений)
-
     document.getElementById('reviews').click()
 }
 
@@ -252,6 +250,12 @@ function zoomControl() {
         map.setZoom(10); // Минимальный зум
     }
 }
+
+document.querySelector("#openChat").addEventListener("click", () => {
+    document.querySelector("#chatArea").classList.toggle("right-0")
+    document.querySelector("#chatArea").classList.toggle("-right-130")
+    document.querySelector("#openChat").innerText = document.querySelector("#openChat").innerText == ">" ? "<" : ">"
+})
 
 // Элементы интерфейса
 const addReviewBtn = document.getElementById('addReviewBtn');
@@ -350,27 +354,30 @@ submitReview.addEventListener('click', async () => {
     }
 
     // Создаем метку с отзывом на карте
-    const reviewPlacemark = new ymaps.Placemark(userLocation, {
-        hintContent: 'Комментарий пользователя',
-        balloonContent: window.balloonContent_template({
-            "review_text": review,
-            "review_speed_test": {
-                "download":downloadEl.innerText,
-                "upload":uploadEl.innerText,
-                "ping":pingEl.innerText,
-            },
-            "user": {
-                "user_telephone": user_telephone,
-            }
-        })
-    }, {
-        iconLayout: 'default#image',
-        iconImageHref: '/pictures/comment.png',
-    });
-
-    map.geoObjects.add(reviewPlacemark);
-    reviewPlacemark.balloon.open();
-
+    if (reviews.checked) {
+        const reviewPlacemark = new ymaps.Placemark(userLocation, {
+            hintContent: 'Комментарий пользователя',
+            balloonContent: window.balloonContent_template({
+                "review_text": review,
+                "review_speed_test": {
+                    "download":downloadEl.innerText,
+                    "upload":uploadEl.innerText,
+                    "ping":pingEl.innerText,
+                },
+                "user": {
+                    "user_telephone": user_telephone,
+                }
+            })
+        }, {
+            iconLayout: 'default#image',
+            iconImageHref: '/pictures/comment.png',
+        });
+    
+        map.geoObjects.add(reviewPlacemark);
+        reviewPlacemark.balloon.open();
+    
+    }
+    
     // Здесь должна быть реальная отправка данных на сервер
     console.log('Отправка отзыва:', {
         phone: user_telephone,

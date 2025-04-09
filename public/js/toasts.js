@@ -43,9 +43,9 @@ function getToastClasses(type) {
     const typeClasses = {
         'success': 'border-green-500 text-green-700',
         'error': 'border-pink-500 text-pink-700',
-        'info': 'border-blue-500 text-blue-700'
+        'info': 'border-black text-black'
     };
-    return `${baseClasses} ${typeClasses[type] || typeClasses['info']}`;
+    return `${baseClasses} ${typeClasses[type]}`;
 }
 
 // Примеры использования:
