@@ -4,12 +4,18 @@
     
     // Create toast element
     const toast = document.createElement('div');
-    toast.className = `p-4 rounded-lg shadow-lg flex items-start justify-between transition-all duration-300 opacity-0 transform translate-x-10 ${getToastClasses(type)}`;
+    toast.className = `py-1 px-2 rounded-lg shadow-lg flex items-center justify-between transition-all duration-300 opacity-0 transform
+     translate-x-10 ${getToastClasses(type)}`;
     
     // Toast content
     toast.innerHTML = `
-        <div class="flex-1">${message}</div>
-        <button class="ml-4 text-lg" onclick="this.parentElement.remove()">&times;</button>
+        <div class="flex font-Halvar text-sm font-semibold">${message}</div>
+        <button class="p-0" onclick="this.parentElement.remove()">
+            <svg class="w-8 h-10 px-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path class="stroke-2 stroke-gray-500" d="M7.75732 7.75745L16.2426 16.2427" ></path>
+                <path class="stroke-2 stroke-gray-500" d="M16.2426 7.75745L7.75732 16.2427" ></path>
+            </svg>
+        </button>
     `;
     
     // Add to container
@@ -36,8 +42,7 @@ function getToastClasses(type) {
     const baseClasses = 'bg-white border';
     const typeClasses = {
         'success': 'border-green-500 text-green-700',
-        'error': 'border-red-500 text-red-700',
-        'warning': 'border-yellow-500 text-yellow-700',
+        'error': 'border-pink-500 text-pink-700',
         'info': 'border-blue-500 text-blue-700'
     };
     return `${baseClasses} ${typeClasses[type] || typeClasses['info']}`;
