@@ -1,3 +1,4 @@
+import {showToast} from "/js/toasts.js"
 const inputs = document.querySelectorAll('.input_numb');
         
 // Автоматически фокусируем первое редактируемое поле
@@ -67,10 +68,10 @@ inputs.forEach((input, index) => {
 
 document.querySelector("#login_btn").addEventListener("click", () => {
     let pass = true
-    phoneNumber = "+"
+    let phoneNumber = "+"
     inputs.forEach((input, index) => {
         if (input.value.length < 1) {
-            alert("Неправельный номер телефона")
+            showToast("Неправельный номер телефона", "error")
             pass = false
         } else {
             phoneNumber += input.value
@@ -92,7 +93,7 @@ document.querySelector("#login_btn").addEventListener("click", () => {
             if (userMessage.user) {
                 window.location.href = "/map"
             } else {
-                alert(userMessage.message)
+                showToast(userMessage.message, "success")
             }
         })
     }

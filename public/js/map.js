@@ -1,3 +1,5 @@
+import { showToast } from "./toasts.js";
+
 let user_id;
 let user_telephone;
 let map;
@@ -41,7 +43,7 @@ function init() {
             map.geoObjects.add(userPlacemark);
         }).catch(function (error) {
             console.error("Ошибка при определении местоположения:", error);
-            alert("Не удалось определить ваше местоположение. Убедитесь, что геолокация включена.");
+            showToast("Не удалось определить ваше местоположение. Убедитесь, что геолокация включена.", "error");
         });
     }
 
@@ -49,8 +51,12 @@ function init() {
         if (coverage.checked) {
             map.geoObjects.removeAll()
             addSelfpoint()
+            getCoverage()
         }
     })
+
+    function getCoverage() {
+    }
 
     reviews.addEventListener("change", () => {
         if (reviews.checked) {
@@ -146,7 +152,7 @@ function runSpeedTest() {
 startButton.addEventListener('click', runSpeedTest);
 
 startTest.addEventListener("click", () => {
-    
+    showToast('Тест скорости начат...', 'info');
 })
 
 
@@ -172,12 +178,12 @@ submitReview.addEventListener('click', async () => {
     const review = reviewText.value.trim();
 
     if (!review) {
-        alert('Пожалуйста, напишите ваш отзыв');
+        showToast('Пожалуйста, напишите ваш отзыв', "error");
         return;
     }
 
     if (!userLocation) {
-        alert('Не удалось определить ваше местоположение');
+        showToast('Не удалось определить ваше местоположение', "error");
         return;
     }
 
@@ -231,7 +237,7 @@ submitReview.addEventListener('click', async () => {
         })
     })
     let data = await Response.json()
-    alert(data.message);
+    showToast(data.message, "succes");
     
 
     // Закрываем модальное окно и очищаем форму
@@ -269,7 +275,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             .then((userOutMessage) => {
                 document.getElementById("login").innerText = "Войти"
                 document.getElementById("login").onclick = () => {window.location.href = "/loginPage"}
-                alert(userOutMessage.message)
+                showToast(userOutMessage.message, "success")
             })
         }
         user_id = userData.user.user_id;

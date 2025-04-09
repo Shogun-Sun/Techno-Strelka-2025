@@ -6,10 +6,13 @@
     <title>Вход - Регистрация</title>
     <link rel="stylesheet" href="./css/out.css">
 </head>
-<body class="duration-500 transition-all scroll-smooth bg-black selection:bg-pink-500 selection:text-white">
-    <main class="min-h-screen absolute w-full flex items-center justify-center px-5 sm:p-0 duration-300 transition-all">
-        <div class="w-full sm:w-120 h-136 rounded-3xl px-6 py-4 flex flex-col justify-between items-center gap-8 bg-white duration-300 transition-all">
-            <h1 class="text-4xl font-bold text-gray-950 text-start w-full font-Halvar">Войти</h1>
+<body class="duration-500 transition-all scroll-smooth">
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-1000 space-y-3 w-80"></div>
+    
+    <main class="min-h-screen absolute w-full flex items-center justify-center bg-gray-950">
+        <div class="w-120 h-136 rounded-3xl px-6 py-4 flex flex-col justify-between items-center gap-8 bg-white">
+            <h1 class="text-4xl font-bold text-gray-950 text-start w-full">Войти</h1>
 
             <div class="flex flex-col basis-10/12 justify-start w-full py-4 gap-6">
                 <h1 class="font-Rooftop text-xl text-gray-500 ">Введите номер любого оператора</h1>
@@ -53,6 +56,7 @@
             </button>
         </div>
     </main>
-    <script src="./js/login.js"></script>
+    <script src="./js/toasts.js" type="module"></script>
+    <script src="./js/login.js" type="module"></script>
 </body>
 </html>

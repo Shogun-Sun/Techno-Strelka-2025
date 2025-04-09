@@ -8,10 +8,18 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=cfb17578-6c78-4dbc-9099-c50949c99d19&lang=ru_RU" type="text/javascript"></script>
 </head>
 
+<<<<<<< Updated upstream
 
 
 <body class=" antialiased selection:bg-pink-500 selection:text-white"">
+=======
+<body class="font-sans antialiased">
+>>>>>>> Stashed changes
     <div class="hidden right-3"></div>
+    
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-1000 space-y-3 w-80"></div>
+    
     <nav class="fixed top-0 w-full py-4 bg-black flex flex-row justify-between px-4 z-50 items-center">
         <div id="logo">
             <img src="./pictures/t2_Logo_White_CMYK.png" alt="t2" class="w-8 sm:w-13 h-auto">
@@ -155,6 +163,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="./js/toggleButton.js"></script>
-    <script src="./js/map.js"></script>
+    <script src="./js/toasts.js" type="module"></script>
+    <script src="/js/map.js" type="module"></script>
 </body>
 </html>
