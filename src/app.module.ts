@@ -36,10 +36,10 @@ export class AppModule implements NestModule {
       .apply(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         session({
-          store: new SequelizeStore(this.sessionService),
-          secret: SESSION_SECRET || 'secret',
-          resave: false,
-          saveUninitialized: false,
+          store: new SequelizeStore(this.sessionService), //Настройка хранилища сессий
+          secret: SESSION_SECRET || 'secret', //Секрет для подписания sid.
+          resave: false, // Не перезаписывать сессию, если она не изменялась
+          saveUninitialized: false, // Не сохранять сессию, если она не была инициализирована
           cookie: {
             secure: false,
             httpOnly: false,
@@ -47,6 +47,6 @@ export class AppModule implements NestModule {
           },
         }),
       )
-      .forRoutes('*');
+      .forRoutes('*'); // Применение middleware ко всем маршрутам
   }
 }
