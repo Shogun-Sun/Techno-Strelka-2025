@@ -9,14 +9,16 @@ import { Chip } from './models/chips.model';
 
 @Module({
   imports: [
+    // Инициализация подключения к базе данных SQLite
     SequelizeModule.forRoot({
       dialect: 'sqlite',
       storage: DATABASE_PATH,
       autoLoadModels: true,
-      synchronize: true,
-      models: [User, Session, Review, Chip],
+      synchronize: true, // Синхронизация моделей с БД (для dev-режима)
+      models: [User, Session, Review, Chip], // Явное указание моделей
       logging: false,
     }),
+    // Подключаем модель Chip для использования в сервисах
     SequelizeModule.forFeature([Chip]),
   ],
   controllers: [],
