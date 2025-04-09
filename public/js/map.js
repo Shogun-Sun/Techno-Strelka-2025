@@ -56,6 +56,39 @@ function init() {
     })
 
     function getCoverage() {
+        let Testdata = [
+            {
+                
+            }
+        ]
+
+        var myPlacemark = new ymaps.Placemark(userLocation, {
+            hintContent: 'Центр круга',
+            balloonContent: 'Это центр круга радиусом 10 км'
+        });
+
+        map.geoObjects.add(myPlacemark);
+
+        var myCircle = new ymaps.Circle([
+            // Координаты центра круга
+            userLocation,
+            // Радиус круга
+            500
+        ], {
+            // Свойства круга
+            balloonContent: "Круг радиусом 10 км",
+            hintContent: "10 км от центра"
+        }, {
+            // Опции круга
+            fillColor: "#7df9ff77",
+            strokeColor: "#0000FF",
+            strokeOpacity: 0.7,
+            strokeWidth: 2
+        });
+
+        // Добавляем круг на карту
+        map.geoObjects.add(myCircle);
+
     }
 
     reviews.addEventListener("change", () => {
