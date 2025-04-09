@@ -5,6 +5,7 @@ import { DATABASE_PATH } from 'src/config';
 import { User } from './models/user.model';
 import { Session } from './models/session.model';
 import { Review } from './models/reviews.model';
+import { Chip } from './models/chips.model';
 
 @Module({
   imports: [
@@ -13,9 +14,10 @@ import { Review } from './models/reviews.model';
       storage: DATABASE_PATH,
       autoLoadModels: true,
       synchronize: true,
-      models: [User, Session, Review],
+      models: [User, Session, Review, Chip],
       logging: false,
     }),
+    SequelizeModule.forFeature([Chip]),
   ],
   controllers: [],
   providers: [DatabaseService],

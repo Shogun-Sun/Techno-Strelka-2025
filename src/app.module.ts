@@ -12,6 +12,7 @@ import { PagesModule } from './pages/pages.module';
 import { AdminModule } from './admin/admin.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { GooglecloudModule } from './chat-bot/chat-bot.module';
+import { ChipsModule } from './chips/chips.module';
 import { T2apiModule } from './t2api/t2api.module';
 
 @Module({
@@ -25,6 +26,7 @@ import { T2apiModule } from './t2api/t2api.module';
     ReviewsModule,
     GooglecloudModule,
     T2apiModule,
+    ChipsModule,
   ],
   controllers: [],
   providers: [],
