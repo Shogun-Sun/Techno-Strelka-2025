@@ -54,6 +54,7 @@ function init() {
         if (coverage.checked) {
             document.getElementById('filt_cover').classList.remove('lg:hidden');
             document.getElementById("openModal2").classList.remove("hidden")
+            document.getElementById("openOfficesModalBtn").classList.add("hidden")
 
             map.geoObjects.removeAll()
             addSelfpoint()
@@ -294,11 +295,41 @@ function getOffices() {
         }
     });
 
+    // Очищаем карту от предыдущих объектов
+    map.geoObjects.removeAll();
+    
+    // Создаем кластеризатор
+    const clusterer = new ymaps.Clusterer({
+        clusterDisableClickZoom: true,
+        clusterOpenBalloonOnClick: true,
+        clusterBalloonContentLayout: 'cluster#balloonCarousel',
+        clusterBalloonItemContentLayout: ymaps.templateLayoutFactory.createClass(
+            '<div class="cluster-item">' +
+                '{{ properties.balloonContentHeader }}<br>' +
+                '{{ properties.balloonContentBody }}<br>' +
+                'Услуги: {{ properties.balloonContentFooter }}' +
+            '</div>'
+        ),
+        clusterIcons: [
+            {
+                href: '/pictures/cluster.png',
+                size: [40, 40],
+                offset: [-20, -20]
+            },
+        ],
+        clusterBalloonPanelMaxMapArea: 0,
+        clusterBalloonContentLayoutWidth: 300,
+        clusterBalloonContentLayoutHeight: 200,
+        clusterBalloonPagerSize: 5
+    });
+
     fetch(`http://localhost:3000/t2api/offices${filer_id}`)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
         if (data.meta?.status === 'OK') {
+            const placemarks = [];
+            
             data.data.forEach((location) => {
                 const defaultIcon = '/pictures/pin-unchosen.d47d1abd.svg';
                 const selectedIcon = '/pictures/pin-chosen.c894ed87.svg';
@@ -346,14 +377,28 @@ function getOffices() {
                     });
                 });
 
-                map.geoObjects.add(placemark);
+                placemarks.push(placemark);
             });
+
+            // Добавляем метки в кластеризатор
+            clusterer.add(placemarks);
+            // Добавляем кластеризатор на карту
+            map.geoObjects.add(clusterer);
+            
+            // Автоматически подбираем оптимальный масштаб для показа всех объектов
+            if (placemarks.length > 0) {
+                map.setBounds(clusterer.getBounds(), {
+                    checkZoomRange: true,
+                    zoomMargin: 50
+                });
+            }
         }
         hideLoader();
     })
     .catch((error) => {
         console.error('Ошибка при получении данных: ', error);
         showToast('Ошибка при получении данных: ', "error");
+        hideLoader();
     });
 }
 
