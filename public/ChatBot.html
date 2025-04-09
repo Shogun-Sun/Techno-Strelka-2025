@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Чат-Бот</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="./css/out.css">
+  </head>
+  <body>
+    <main class="flex flex-col w-screen h-screen items-center gap-5">
+      <header class="w-10/12">
+        <h1 class="text-3xl font-bold text-black">Чат-Бот</h1>
+        <p class="text-gray-600 text-lg">Общайтесь с нашим умным помощником</p>
+      </header>
+      <div id="chat" class="border-2 rounded-xl w-10/12 h-9/12 p-4 overflow-y-scroll"></div>
+      <div class="w-10/12 flex flex-row gap-4">
+        <input  type="text"  class="flex rounded-lg border-2 px-2 py-1 text-xl font-medium w-full" id="messageInput" placeholder="Введите сообщение" />
+        <button id="sendBtn" class="bg-pink-600 rounded-xl text-white text-xl px-4 py-1 ">Отправить</button>  
+        <!-- добавить шрифты -->
+      </div>
+    </main>
+  </body>
+  <script src="/js/chat_bot.js"></script>
+</html>

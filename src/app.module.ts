@@ -11,6 +11,7 @@ import { Session } from './database/models/session.model';
 import { PagesModule } from './pages/pages.module';
 import { AdminModule } from './admin/admin.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { GooglecloudModule } from './chat-bot/chat-bot.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ReviewsModule } from './reviews/reviews.module';
     PagesModule,
     AdminModule,
     ReviewsModule,
+    GooglecloudModule,
   ],
   controllers: [],
   providers: [],
