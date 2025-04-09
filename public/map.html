@@ -64,6 +64,9 @@
     </nav>
     <div class="w-screen h-screen pt-18 sm:pt-19">
         <div id="map" class="w-full h-full"></div>
+        <div id="loader" class="absolute inset-0 w-full h-full bg-white/70 backdrop-blur-sm flex justify-center items-center text-xl z-25">
+            Загрузка карты...
+          </div>
     </div>
     <div class ="fixed bottom-8 right-8 z-10 flex flex-col gap-4">
         <button id="addReviewBtn" class=" bg-black text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors 
@@ -93,6 +96,81 @@
             <input type="checkbox" class="checkbox_lte450 accent-black text-white font-semibold font-Halvar w-4 h-4" id="checkbox_lte450" checked>
             <label class="ml-2 font-Rooftop font-bold text-lg text-black px-4 py-0.5 rounded-10 bg-[rgb(246,241,218)]" for="checkbox_ltee450">LTE450</label>
             <p class="font-Rooftop text-base text-black">Высокоскоростной интернет для самых удаленных районов (требуется оборудование Skylink)</p>
+        </div>
+    </div>
+
+    <div id="officesModal" class="fixed inset-0 z-10 hidden items-center justify-center bg-white/1 backdrop-blur-sm overflow-y-scroll">
+        <div class="bg-white rounded-2xl p-8 w-full max-w-md mx-4 flex flex-col gap-4 absolute top-20 mb-10">
+            <div class="flex items-center justify-between py-1">                 
+                <div class="text-2xl font-Halvar text-gray-950">Фильтр офисов</div>
+                <button id="closeOfficesModal" class="p-0">
+                    <svg class="w-8 h-10 px-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path class="stroke-2 stroke-gray-500" d="M7.75732 7.75745L16.2426 16.2427"></path>
+                        <path class="stroke-2 stroke-gray-500" d="M16.2426 7.75745L7.75732 16.2427"></path>
+                    </svg>
+                </button>
+            </div>
+    
+            <div class="space-y-3">
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="5600002" class="custom-checkbox">
+                    <span class="ml-3 text-black">Подключают домашний интернет от t2</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="5600001" class="custom-checkbox w-5 h-5" style="width:20px; height:20px;">
+                    <span class="ml-3 text-black">Продают устройства по акции «Обмен минут на смартфоны и гаджеты»</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="5400002" class="custom-checkbox">
+                    <span class="ml-3 text-black">Подключают eSIM</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="5500004" class="custom-checkbox">
+                    <span class="ml-3 text-black">Помогают с заменой SIM-карты другого региона</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="srv100007" class="custom-checkbox">
+                    <span class="ml-3 text-black">Обслуживают корпоративных клиентов</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="5500001" class="custom-checkbox">
+                    <span class="ml-3 text-black">Подключают услуги «Ростелекома»</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="6000001" class="custom-checkbox">
+                    <span class="ml-3 text-black">Продают смартфоны в trade-in</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="5600004" class="custom-checkbox">
+                    <span class="ml-3 text-black">Принимают платежи наличными на кассе</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="srv100009" class="custom-checkbox">
+                    <span class="ml-3 text-black">Работают после 20:00</span>
+                </label>
+    
+                <label class="flex items-center p-4 bg-white rounded-lg border border-black cursor-pointer hover:bg-gray-100 transition">
+                    <input type="radio" name="Office_radio" data-filterId="srv100011" class="custom-checkbox">
+                    <span class="ml-3 text-black">Работают по выходным</span>
+                </label>
+            </div>
+    
+            <div class="mt-4 flex justify-center gap-4">
+                <button id="clear_filter" class="px-6 py-2 bg-white text-black rounded-lg border border-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition">
+                    Сбросить
+                </button>
+                <button id="applyOfficeFilters" class="px-6 py-2 bg-black text-white rounded-lg border border-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition">
+                    Применить
+                </button>
+            </div>
         </div>
     </div>
     

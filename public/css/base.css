@@ -58,3 +58,33 @@ input.invalid:focus {
     will-change: transform;
     @apply w-23 sm:w-26
 }
+
+/* Стили для кастомных радио-кнопок */
+.custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #999;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  
+  .custom-checkbox:checked {
+    border-color: #FF3495;
+  }
+  
+  .custom-checkbox:checked::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background-color: #FF3495;
+    border-radius: 50%;
+  }

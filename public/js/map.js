@@ -11,6 +11,8 @@ window.balloonContent_template = Handlebars.compile(balloonContent_template);
 
 const coverage = document.getElementById('coverage');
 const reviews = document.getElementById('reviews');
+const offices = document.getElementById('offices');
+
 
 // Инициализация карты
 ymaps.ready(init);
@@ -60,6 +62,7 @@ function init() {
             document.getElementById("checkbox_4g").checked = true;
             document.getElementById("checkbox_lte450").checked = true;
             getCoverage()
+            hideLoader()
         }
     })
 
@@ -112,9 +115,11 @@ function init() {
             }
             document.getElementById('filt_cover').classList.add('lg:hidden');
             document.getElementById("openModal2").classList.add("hidden")
+            document.getElementById("openOfficesModalBtn").classList.add("hidden")
             map.geoObjects.removeAll();
             addSelfpoint()
             getReviews()
+            hideLoader()
         }
     })
 
@@ -214,8 +219,120 @@ function init() {
         });
     }
 
+    offices.addEventListener("change", () => {
+        showLoader()
+        console.log(document.getElementById("loader"))
+        document.getElementById("loader").classList.remove("hidden")
+        if (offices.checked) {
+            for (var key in layers) {
+                map.layers.remove(layers[key]);
+            }
+            document.getElementById('filt_cover').classList.add('lg:hidden');
+            document.getElementById("openModal2").classList.add("hidden")
+            document.getElementById("openOfficesModalBtn").classList.remove("hidden")
+            map.geoObjects.removeAll();
+            addSelfpoint()
+            getOffices()
+            
+        }
+    })
+
     document.getElementById('reviews').click()
 }
+
+function getOffices() {
+    showLoader();
+    let filters = document.querySelectorAll(".custom-checkbox");
+    let filer_id = ''
+    filters.forEach((filter) => {
+        if (filter.checked) {
+            filer_id += filter.dataset.filterid
+        }
+
+    })
+    fetch(`http://localhost:3000/t2api/offices${filer_id}`)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data)
+      if (data.meta?.status === 'OK') {
+        data.data.forEach((location) => {
+          var placemark = new ymaps.Placemark(
+            [location.latitude, location.longitude],
+            {
+              balloonContentHeader: location.city,
+              balloonContentBody: location.address,
+              balloonContentFooter: `<b>Услуги:</b> ${location.services.map((s) => s.name).join(', ')}`,
+            },
+            {
+              iconLayout: 'default#image',
+              iconImageSize: [30, 30],
+              iconImageOffset: [-15, -30],
+            },
+          );
+          map.geoObjects.add(placemark);
+        });
+      }
+      hideLoader();
+    })
+    .catch((error) => {
+        console.error('Ошибка при получении данных: ', error)
+        showToast('Ошибка при получении данных: ', "error")
+    })
+}
+
+// Добавьте эту кнопку в ваш интерфейс (например, рядом с кнопкой "Добавить отзыв")
+const openOfficesModalBtn = document.createElement('button');
+openOfficesModalBtn.id = 'openOfficesModalBtn';
+openOfficesModalBtn.className = 'bg-black text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar';
+openOfficesModalBtn.textContent = 'Фильтр офисов';
+document.querySelector('.fixed.bottom-8.right-8.z-10.flex.flex-col.gap-4').appendChild(openOfficesModalBtn);
+
+// Обработчики событий для модального окна офисов
+const officesModal = document.getElementById('officesModal');
+const closeOfficesModalBtn = document.getElementById('closeOfficesModal');
+const applyOfficeFiltersBtn = document.getElementById('applyOfficeFilters');
+const clear_filter = document.getElementById('clear_filter');
+const applyOfficeFilters = document.getElementById('applyOfficeFilters');
+
+
+openOfficesModalBtn.addEventListener('click', () => {
+    officesModal.classList.remove('hidden');
+    setTimeout(() => {
+        officesModal.classList.add('flex');
+    }, 10);
+});
+
+closeOfficesModalBtn.addEventListener('click', () => {
+    officesModal.classList.remove('flex');
+    setTimeout(() => {
+        officesModal.classList.add('hidden');
+    }, 10);
+});
+
+clear_filter.addEventListener("click", () => {
+    document.querySelectorAll(".custom-checkbox").forEach((box) => {
+        box.checked = false;
+    })
+    closeOfficesModalBtn.click()
+    getOffices()
+})
+
+applyOfficeFilters.addEventListener("click", () => {
+    closeOfficesModalBtn.click()
+    getOffices()
+})
+
+
+applyOfficeFiltersBtn.addEventListener('click', () => {
+    // Здесь будет логика применения фильтров
+    officesModal.classList.remove('flex');
+    setTimeout(() => {
+        officesModal.classList.add('hidden');
+    }, 10);
+    
+    // Показываем уведомление об успешном применении фильтров
+    showToast('Фильтры офисов применены', 'success');
+});
 
 function toggleLayer() {
     if (document.getElementById("checkbox_2g").checked) {
@@ -428,10 +545,20 @@ submitReview.addEventListener('click', async () => {
     reviewModal.classList.add('hidden');
     reviewModal.classList.remove('flex');
     reviewText.value = '';
-
-    // Показываем уведомление
-    
 });
+
+// Функция для отображения загрузчика
+function showLoader() {
+    document.getElementById('loader').classList.remove('hidden');
+    document.getElementById('loader').classList.add('flex');
+}
+
+// Функция для скрытия загрузчика
+function hideLoader() {
+    document.getElementById('loader').classList.remove('flex');
+    document.getElementById('loader').classList.add('hidden');
+}
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     const userResponse = await fetch("/user/profile", {
@@ -440,30 +567,31 @@ document.addEventListener("DOMContentLoaded", async () => {
             "Content-Type": "application/json",
         }
     })
-        let userData = await userResponse.json()
-        console.log(userData);
-        if (userData.error) {
-            user_id = null
-            user_telephone = null
-            return;
-        }
-        document.getElementById("login").innerText = "Выйти"
-        document.getElementById("login").onclick = () => {
-            fetch("/user/logout", {
-                method:"Get",
-                headers:{
-                    "Content-Type": "application/json",
-                },
-            })
-            .then(res=> res.json())
-            .then((userOutMessage) => {
-                document.getElementById("login").innerText = "Войти"
-                document.getElementById("login").onclick = () => {window.location.href = "/loginPage"}
-                showToast(userOutMessage.message, "success")
-            })
-        }
-        user_id = userData.user.user_id;
-        user_telephone = userData.user.user_telephone;
-        document.querySelector("#phoneNumberComment").textContent = user_telephone;
+    let userData = await userResponse.json()
+    console.log(userData);
+    if (userData.error) {
+        user_id = null
+        user_telephone = null
+        return;
+    }
+    document.getElementById("login").innerText = "Выйти"
+    document.getElementById("login").onclick = () => {
+        fetch("/user/logout", {
+            method:"Get",
+            headers:{
+                "Content-Type": "application/json",
+            },
+        })
+        .then(res=> res.json())
+        .then((userOutMessage) => {
+            document.getElementById("login").innerText = "Войти"
+            document.getElementById("login").onclick = () => {window.location.href = "/loginPage"}
+            showToast(userOutMessage.message, "success")
+        })
+    }
+    user_id = userData.user.user_id;
+    user_telephone = userData.user.user_telephone;
+    document.querySelector("#phoneNumberComment").textContent = user_telephone;
+    
 
 })
