@@ -5,6 +5,7 @@ let user_telephone;
 let map;
 let userLocation = null; // Изначально null
 let userPlacemark = null;
+document.getElementById('chat_bot').addEventListener('click', () => { window.location.href = "/chatbot"})
 
 const balloonContent_template = document.getElementById("balloonContent_template").innerHTML;
 window.balloonContent_template = Handlebars.compile(balloonContent_template);

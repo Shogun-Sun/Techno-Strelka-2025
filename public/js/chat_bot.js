@@ -56,8 +56,8 @@ function appendUserMessage(text) {
   messageDiv.className = 'flex justify-end mb-4';
   messageDiv.innerHTML = `
     <div class="bg-pink-600 text-white rounded-xl px-4 py-2 max-w-xs md:max-w-md">
-      <p class="font-medium">Вы</p>
-      <p>${text}</p>
+      <p class="font-medium font-Halvar">Вы</p>
+      <p class="font-Rooftop">${text}</p>
     </div>
   `;
   chat.appendChild(messageDiv);
@@ -69,8 +69,8 @@ function appendBotMessage(text) {
   messageDiv.className = 'flex justify-start mb-4';
   messageDiv.innerHTML = `
     <div class="bg-gray-100 text-black rounded-xl px-4 py-2 max-w-xs md:max-w-md">
-      <p class="font-medium">Tele2Bot</p>
-      <p>${text}</p>
+      <p class="font-medium font-Halvar">Tele2Bot</p>
+      <p class="font-Rooftop">${text}</p>
     </div>
   `;
   chat.appendChild(messageDiv);

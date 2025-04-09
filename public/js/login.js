@@ -90,7 +90,7 @@ document.querySelector("#login_btn").addEventListener("click", () => {
         .then(res=> res.json())
         .then((userMessage) => {
             if (userMessage.user) {
-                window.location.href = "/map"
+                window.location.href = "/"
             } else {
                 if (userMessage.error) {
                     showToast(userMessage.message, "error")

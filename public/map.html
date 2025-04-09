@@ -8,7 +8,7 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=cfb17578-6c78-4dbc-9099-c50949c99d19&lang=ru_RU" type="text/javascript"></script>
 </head>
 
-<body class=" antialiased selection:bg-pink-500 selection:text-white"">
+<body class=" antialiased selection:bg-pink-500 selection:text-white">
     
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="fixed top-20 right-4 z-1000 space-y-3 w-80"></div>
@@ -37,7 +37,7 @@
             
             <!-- Индикатор выбора -->
             <div id="navIndicator" class="absolute h-full py-1 w-26 sm:w-30 rounded-lg top-0 left-4 z-10 transition-all duration-500"> 
-                <div class="w-full h-full bg-white rounded-lg shadow-sm"></div>               
+                <div class="w-full h-full bg-pink-600 rounded-lg shadow-sm"></div>               
             </div>
         </div>
 
@@ -48,10 +48,17 @@
     <div class="w-screen h-screen pt-18 sm:pt-19">
         <div id="map" class="w-full h-full"></div>
     </div>
-    <button id="addReviewBtn" class="fixed bottom-10 right-8 z-10 bg-black text-white px-6 py-3 rounded-xl shadow-lg hover:bg-gray-950 transition-colors 
-    duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar">
-        + Добавить отзыв
-    </button>
+    <div class ="fixed bottom-8 right-8 z-10 flex flex-col gap-4">
+        <button id="addReviewBtn" class=" bg-black text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors 
+        duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar">
+            + Добавить отзыв
+        </button>
+        <button id="chat_bot" class="bg-black text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors 
+        duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 font-Halvar ">
+            Чат-бот
+        </button>
+    </div>
+
     <div id="filt_cover" class="fixed left-8 bottom-10 bg-white rounded-2xl px-4 py-6 lg:flex flex-col gap-4 w-90 hidden ">
         <div class="text-black font-Halvar text-xl text-left">Карта покрытий</div>
         <div>
@@ -76,11 +83,12 @@
         </div>
     </div>
     
-    <button id="openModal2" class="fixed left-4 bottom-4 bg-blue-600 text-white p-3 rounded-full shadow-lg lg:hidden">
+    <button id="openModal2" class="fixed left-4 bottom-6 bg-black text-white p-3 rounded-xl shadow-lg lg:hidden">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </button>
+
     <div id="FiltModal" class="fixed inset-0 z-10 hidden items-center justify-center bg-white/1 backdrop-blur-sm overflow-y-scroll ">
         <div class="bg-white rounded-2xl p-8 w-full max-w-md mx-4 flex flex-col gap-4 absolute top-20 mb-10">
             <div class="flex justify-between items-center py-1">
