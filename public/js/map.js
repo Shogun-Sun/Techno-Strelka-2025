@@ -265,48 +265,53 @@ const resultsDiv = document.getElementById('results');
 const downloadEl = document.getElementById('download-speed');
 const uploadEl = document.getElementById('upload-speed');
 const pingEl = document.getElementById('ping');
+  
+document.getElementById('startTest').addEventListener('click', function() {
+    startSpeedTest();
+  });
 
-function runSpeedTest() {
+async function startSpeedTest() {
+        // Тест ping
+        let result = {}
+        document.querySelector("#results").classList.add("hidden")
+        document.querySelector("#startTest").innerText = "Тестирование..."
+        const pingStart = performance.now();
+        await fetch('https://httpbin.org/get', {cache: 'no-store'});
+        const pingEnd = performance.now();
+        result.ping = Math.round(pingEnd - pingStart);
+        console.log(result)
+        
+        // Тест загрузки (download)
+        const downloadStart = performance.now();
+        const downloadSize = 5 * 1024 * 1024; // 5MB тестовый файл
+        await fetch(`https://httpbin.org/bytes/${downloadSize}`, {cache: 'no-store'});
+        const downloadEnd = performance.now();
+        const downloadSpeed = (downloadSize * 8 / (downloadEnd - downloadStart) / 1000).toFixed(2);
+        result.download = downloadSpeed;
+        console.log(result)
+        // Тест отдачи (upload) - упрощенный
+        const uploadStart = performance.now();
+        const uploadSize = 1 * 1024 * 1024 ; // 1MB данных
+        await fetch('https://httpbin.org/post', {
+          method: 'POST',
+          body: new ArrayBuffer(uploadSize),
+          cache: 'no-store'
+        });
+        const uploadEnd = performance.now();
+        const uploadSpeed = (uploadSize * 8 / (uploadEnd - uploadStart) / 1000).toFixed(2);
+        result.upload = uploadSpeed;
+        console.log(result)
 
-    startButton.disabled = true;
-    startButton.textContent = 'Тестирование...';
-    resultsDiv.classList.add('hidden');
+        document.querySelector("#startTest").innerText = "Пройти еще раз"
+        document.querySelector("#download-speed").innerText = result.download;
+        document.querySelector("#upload-speed").innerText = result.upload;
+        document.querySelector("#ping").innerText = result.ping;
+        document.querySelector("#results").classList.remove("hidden")
+        
 
-    // Имитация процесса тестирования
-    let download = 0;
-    let upload = 0;
-    let ping = 0;
-    
-    const downloadInterval = setInterval(() => {
-        download += Math.random() * 10;
-        downloadEl.textContent = download.toFixed(2);
-        if (download >= 80 + Math.random() * 40) {
-            clearInterval(downloadInterval);
-            startUploadTest();
-        }
-    }, 200);
 
-    function startUploadTest() {
-        const uploadInterval = setInterval(() => {
-            upload += Math.random() * 5;
-            uploadEl.textContent = upload.toFixed(2);
-            if (upload >= 20 + Math.random() * 20) {
-                clearInterval(uploadInterval);
-                finishTest();
-            }
-        }, 200);
-    }
 
-    function finishTest() {
-        ping = 10 + Math.random() * 30;
-        pingEl.textContent = ping.toFixed(2);
-        resultsDiv.classList.remove('hidden');
-        startButton.textContent = 'Повторить тест';
-        startButton.disabled = false;
-    }
-}
-
-startButton.addEventListener('click', runSpeedTest);
+      }
 
 startTest.addEventListener("click", () => {
     showToast('Тест скорости начат...', 'info');
