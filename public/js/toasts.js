@@ -9,7 +9,7 @@
     
     // Toast content
     toast.innerHTML = `
-        <div class="flex font-Halvar text-sm font-semibold">${message}</div>
+        <div class="flex font-Halvar text-base font-semibold">${message}</div>
         <button class="p-0" onclick="this.parentElement.remove()">
             <svg class="w-8 h-10 px-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path class="stroke-2 stroke-gray-500" d="M7.75732 7.75745L16.2426 16.2427" ></path>

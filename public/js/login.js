@@ -69,9 +69,8 @@ inputs.forEach((input, index) => {
 document.querySelector("#login_btn").addEventListener("click", () => {
     let pass = true
     let phoneNumber = "+"
-    inputs.forEach((input, index) => {
+    inputs.forEach((input) => {
         if (input.value.length < 1) {
-            showToast("Неправельный номер телефона", "error")
             pass = false
         } else {
             phoneNumber += input.value
@@ -93,8 +92,15 @@ document.querySelector("#login_btn").addEventListener("click", () => {
             if (userMessage.user) {
                 window.location.href = "/map"
             } else {
-                showToast(userMessage.message, "success")
+                if (userMessage.error) {
+                    showToast(userMessage.message, "error")
+                    return
+                } else {
+                    showToast(userMessage.message, "success")
+                }
             }
         })
+    } else {
+        showToast("Неправельный номер телефона", "error")
     }
 })
