@@ -239,14 +239,8 @@
   .top-20 {
     top: calc(var(--spacing) * 20);
   }
-  .top-40 {
-    top: calc(var(--spacing) * 40);
-  }
   .right-1 {
     right: calc(var(--spacing) * 1);
-  }
-  .right-3 {
-    right: calc(var(--spacing) * 3);
   }
   .right-4 {
     right: calc(var(--spacing) * 4);
@@ -299,9 +293,6 @@
       max-width: 96rem;
     }
   }
-  .m-8 {
-    margin: calc(var(--spacing) * 8);
-  }
   .mx-4 {
     margin-inline: calc(var(--spacing) * 4);
   }
@@ -311,9 +302,6 @@
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
   }
-  .mb-5 {
-    margin-bottom: calc(var(--spacing) * 5);
-  }
   .mb-6 {
     margin-bottom: calc(var(--spacing) * 6);
   }
@@ -322,9 +310,6 @@
   }
   .mb-10 {
     margin-bottom: calc(var(--spacing) * 10);
-  }
-  .ml-4 {
-    margin-left: calc(var(--spacing) * 4);
   }
   .block {
     display: block;
@@ -386,20 +371,38 @@
   .w-120 {
     width: calc(var(--spacing) * 120);
   }
+  .w-fit {
+    width: fit-content;
+  }
   .w-full {
     width: 100%;
   }
   .w-screen {
     width: 100vw;
   }
+  .max-w-50 {
+    max-width: calc(var(--spacing) * 50);
+  }
+  .max-w-60 {
+    max-width: calc(var(--spacing) * 60);
+  }
+  .max-w-65 {
+    max-width: calc(var(--spacing) * 65);
+  }
+  .max-w-70 {
+    max-width: calc(var(--spacing) * 70);
+  }
+  .max-w-72 {
+    max-width: calc(var(--spacing) * 72);
+  }
+  .max-w-75 {
+    max-width: calc(var(--spacing) * 75);
+  }
   .max-w-md {
     max-width: var(--container-md);
   }
   .min-w-10 {
     min-width: calc(var(--spacing) * 10);
-  }
-  .flex-1 {
-    flex: 1;
   }
   .basis-1 {
     flex-basis: calc(var(--spacing) * 1);
@@ -557,12 +560,6 @@
   .border-pink-500 {
     border-color: var(--color-pink-500);
   }
-  .border-red-500 {
-    border-color: var(--color-red-500);
-  }
-  .border-yellow-500 {
-    border-color: var(--color-yellow-500);
-  }
   .border-x-\(--pattern-fg\) {
     border-inline-color: var(--pattern-fg);
   }
@@ -629,14 +626,14 @@
   .p-3 {
     padding: calc(var(--spacing) * 3);
   }
-  .p-4 {
-    padding: calc(var(--spacing) * 4);
-  }
   .p-8 {
     padding: calc(var(--spacing) * 8);
   }
   .px-0 {
     padding-inline: calc(var(--spacing) * 0);
+  }
+  .px-1 {
+    padding-inline: calc(var(--spacing) * 1);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
@@ -747,9 +744,6 @@
   .text-pink-700 {
     color: var(--color-pink-700);
   }
-  .text-red-700 {
-    color: var(--color-red-700);
-  }
   .text-slate-700 {
     color: var(--color-slate-700);
   }
@@ -761,9 +755,6 @@
   }
   .text-yellow-500 {
     color: var(--color-yellow-500);
-  }
-  .text-yellow-700 {
-    color: var(--color-yellow-700);
   }
   .underline {
     text-decoration-line: underline;

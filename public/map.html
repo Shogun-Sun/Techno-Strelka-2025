@@ -119,29 +119,29 @@
     </div>
 
     <script id="balloonContent_template" type="text/x-handlebars-template">
-        <div class="p-2 overflow-y-scroll h-auto ">
-            <h3 class="font-bold mb-1">Отзыв</h3>
-            <p class="mb-2">{{review_text}}</p>
-            <p class="text-sm text-gray-600">Телефон: {{user.user_telephone}}</p>
+        <div class="py-2 px-1 overflow-y-scroll h-auto flex flex-col gap-4 max-w-75 w-fit">
+            <p class="text-lg font-Halvar text-black  block">Телефон: {{user.user_telephone}}</p>
+
+            <p class="text-sm font-Rooftop text-black block w-full">{{review_text}}</p>
             
             {{#if review_speed_test.download}}
-                <div id="results" class=" space-y-3 text-left">
+                <div id="results" class="space-y-3 text-left">
                     <div class="flex justify-between">
-                        <span class="font-semibold font-Rooftop">Скачивание:</span>
+                        <span class="font-semibold font-Halvar">Скачивание:</span>
                         <div class="flex justify-between basis-1/2">
                             <span id="download-speed" class="font-bold font-Rooftop">{{review_speed_test.download}}</span>
                             <span> Mbps </span> 
                         </div>
                     </div>
                     <div class="flex justify-between">
-                        <span class="font-semibold font-Rooftop">Отправка:</span>
+                        <span class="font-semibold font-Halvar">Отправка:</span>
                         <div class="flex justify-between basis-1/2 ">
                             <span id="upload-speed" class="font-bold font-Rooftop">{{review_speed_test.upload}}</span>
                             <span> Mbps </span> 
                         </div>
                     </div>
                     <div class="flex justify-between">
-                        <span class="font-semibold font-Rooftop">Пинг:</span>
+                        <span class="font-semibold font-Halvar">Пинг:</span>
                         <div class="flex justify-between basis-1/2">
                             <span id="ping" class="font-bold font-Rooftop">{{review_speed_test.ping}}</span>
                             <span> ms </span> 
@@ -149,7 +149,7 @@
                     </div>
                 </div>
             {{else}}
-                <div>Данные о скорости интернета отстутствуют.</div>
+                <div class="text-black font-Rooftop text-sm">Данные о скорости интернета отстутствуют.</div>
             {{/if}}
         </div>
     </script>
