@@ -11,6 +11,7 @@ import { Session } from './database/models/session.model';
 import { PagesModule } from './pages/pages.module';
 import { AdminModule } from './admin/admin.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { T2apiModule } from './t2api/t2api.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ReviewsModule } from './reviews/reviews.module';
     PagesModule,
     AdminModule,
     ReviewsModule,
+    T2apiModule,
   ],
   controllers: [],
   providers: [],

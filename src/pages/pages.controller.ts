@@ -23,4 +23,9 @@ export class PagesController {
   pagePath(file: string) {
     return join(__dirname, '..', '..', 'public', file);
   }
+
+  @Get('testOffice')
+  testOffice(@Res() res: Response) {
+    res.sendFile(this.pagePath('TestOffice.html'));
+  }
 }
