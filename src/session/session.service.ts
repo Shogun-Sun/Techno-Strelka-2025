@@ -7,10 +7,12 @@ import { Op } from 'sequelize';
 export class SessionService {
   constructor(@InjectModel(Session) private sessions: typeof Session) {}
 
+  //Метод для получения сессии
   async get(sid: string): Promise<Session | null> {
     return this.sessions.findOne({ where: { sid } });
   }
 
+  //Метод для установки или обновления сессии
   async set(
     sid: string,
     data: any,
@@ -26,10 +28,12 @@ export class SessionService {
     return session;
   }
 
+  //Метод для удаления сессии
   async destroy(sid: string): Promise<void> {
     await this.sessions.destroy({ where: { sid } });
   }
 
+  //Метод для очистки устаревших сессий
   async cleanExpired(): Promise<void> {
     await this.sessions.destroy({
       where: { expires: { [Op.lt]: new Date() } },
