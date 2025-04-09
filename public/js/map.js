@@ -50,6 +50,9 @@ function init() {
 
     coverage.addEventListener("change", () => {
         if (coverage.checked) {
+            document.getElementById('filt_cover').classList.remove('lg:hidden');
+            document.getElementById("openModal2").classList.remove("hidden")
+
             map.geoObjects.removeAll()
             addSelfpoint()
             document.getElementById("checkbox_2g").checked = true;
@@ -94,14 +97,21 @@ function init() {
         document.getElementById("checkbox_3g").addEventListener("change", toggleLayer);
         document.getElementById("checkbox_4g").addEventListener("change", toggleLayer);
         document.getElementById("checkbox_lte450").addEventListener("change", toggleLayer);
+
+        document.querySelector(".checkbox_2g_modal").addEventListener("change", toggleLayer);
+        document.querySelector(".checkbox_3g_modal").addEventListener("change", toggleLayer);
+        document.querySelector(".checkbox_4g_modal").addEventListener("change", toggleLayer);
+        document.querySelector(".checkbox_lte450_modal").addEventListener("change", toggleLayer);
     }    
 
     reviews.addEventListener("change", () => {
+        console.log(reviews.checked)
         if (reviews.checked) {
             for (var key in layers) {
                 map.layers.remove(layers[key]);
             }
-            document.getElementById('filt_cover').classList.add('hidden');
+            document.getElementById('filt_cover').classList.add('lg:hidden');
+            document.getElementById("openModal2").classList.add("hidden")
             map.geoObjects.removeAll();
             addSelfpoint()
             getReviews()
@@ -254,7 +264,7 @@ const resultsDiv = document.getElementById('results');
 const downloadEl = document.getElementById('download-speed');
 const uploadEl = document.getElementById('upload-speed');
 const pingEl = document.getElementById('ping');
-    
+
 function runSpeedTest() {
 
     startButton.disabled = true;
