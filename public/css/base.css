@@ -50,35 +50,11 @@ input.invalid:focus {
     box-shadow: 0 0 0 1px #ec4899;
 }
 
-#navIndicator {
-    will-change: transform;
-}
-
 .nav-label {
-    display: block;
-    width: 6.5rem;  /* w-26 */
-    text-align: center;
-    font-size: 1rem; /* text-base */
-    line-height: 1.5rem; /* text-lg */
-    color: #000; /* text-black */
-    cursor: pointer;
-    padding: 0.25rem 0.5rem; /* px-2 py-1 */
-    font-family: 'Rooftop', sans-serif; /* font-Rooftop */
-    transition: color 0.2s; /* transition-colors duration-200 */
+    @apply block w-22 sm:w-26 text-center text-base text-black cursor-pointer px-0.5 sm:px-2 py-1 font-Rooftop duration-300
 }
 
 #navIndicator {
-    width: 6.5rem; /* w-26 */
     will-change: transform;
-}
-
-@media (min-width: 640px) {
-    .nav-label {
-        width: 7.5rem; /* w-30 */
-        font-size: 1.125rem; /* text-lg */
-        padding: 0.25rem 1rem; /* px-4 py-1 */
-    }
-    #navIndicator {
-        width: 7.5rem; /* w-30 */
-    }
+    @apply w-23 sm:w-26
 }

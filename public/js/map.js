@@ -262,7 +262,7 @@ open_chat.addEventListener("click", () => {
     chat_area.classList.toggle("translate-x-0");
     
     // Анимация кнопки
-    open_chat.classList.toggle('left-2');
+    open_chat.classList.toggle('-left-7.5');
     open_chat.classList.toggle('-left-15');
     open_chat.innerText = open_chat.innerText == "<" ? ">" : "<";
 });

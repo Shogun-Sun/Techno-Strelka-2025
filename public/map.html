@@ -9,8 +9,9 @@
 </head>
 
 <body class=" antialiased selection:bg-pink-500 selection:text-white relative overflow-x-hidden"> 
-    <div id="chatArea" class="w-full sm:w-140 h-screen pt-19 z-200 absolute top-0 right-0 flex items-center gap-2 pl-20 pr-4 bg-white duration-500 transition-transform ease-in-out translate-x-full">
-        <button id="openChat" class="px-5 py-3 bg-black text-white rounded-full text-xl font-Halvar border absolute -left-15 transition-all duration-500">
+    <div id="chatArea" class="w-full sm:w-140 h-screen pt-19 z-200 absolute top-0 right-0 flex items-center gap-2 bg-white duration-500 transition-transform ease-in-out translate-x-full">
+        <button id="openChat" class="px-5 py-3 bg-black text-white rounded-full text-xl font-Halvar absolute -left-15
+        border-2 border-white transition-all duration-500 shadow-lg shadow-white">
             <
         </button>
         <iframe class="w-full h-full rounded-5xl bg-white" id="inlineFrameExample" title="Inline Frame Example" src="http://localhost:3000/chatbot"></iframe>
@@ -20,12 +21,12 @@
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="fixed top-20 right-4 z-1000 space-y-3 w-80"></div>
     
-    <nav class="fixed top-0 w-full py-4 bg-black flex flex-row justify-between px-4 z-250 items-center">
-        <div id="logo">
+    <nav class="fixed top-0 w-full py-4 bg-black flex flex-row justify-between px-2 sm:px-4 z-250 items-center">
+        <div id="logo" class="border-white border">
             <img src="./pictures/t2_Logo_White_CMYK.png" alt="t2" class="w-8 sm:w-13 h-auto">
         </div>
 
-        <div class="flex bg-gray-300 rounded-lg overflow-hidden shadow-md relative px-0 sm:px-3 py-1 gap-4 sm:gap-8" id="navContainer">
+        <div class="flex bg-gray-300 rounded-lg overflow-hidden shadow-md relative px-0 sm:px-3 py-0 sm:py-1 gap-0 sm:gap-2 md:gap-4 lg:gap-8" id="navContainer">
             <!-- Покрытие -->
             <div class="relative z-20 nav-item">
                 <input type="radio" name="navSwitch" id="coverage" class="hidden" checked>
@@ -51,12 +52,13 @@
             </div>
             
             <!-- Индикатор выбора -->
-            <div id="navIndicator" class="absolute h-full py-1 rounded-lg top-0 left-0 z-10 transition-all duration-500"> 
+            <div id="navIndicator" class="absolute h-full px-0.5 py-1 rounded-lg top-0 left-0 z-10 transition-all duration-500"> 
                 <div class="w-full h-full bg-pink-600 rounded-lg shadow-sm"></div>               
             </div>
         </div>
 
-        <button id="login" onclick="window.location.href = '/loginPage';" class="text-base font-Halvar text-black bg-white rounded-lg px-3 py-1 hover:bg-gray-100">
+        <button id="login" onclick="window.location.href = '/loginPage';" class="text-base font-Halvar text-black bg-white rounded-lg px-1 py-0.5 sm:px-3 sm:py-1
+         hover:bg-gray-100">
             Войти
         </button>
     </nav>
