@@ -56,7 +56,6 @@ function init() {
             document.getElementById("checkbox_3g").checked = true;
             document.getElementById("checkbox_4g").checked = true;
             document.getElementById("checkbox_lte450").checked = true;
-            document.getElementById('filt_cover').classList.remove('hidden');
             getCoverage()
         }
     })
@@ -238,8 +237,6 @@ function toggleLayer() {
 
 function zoomControl() {
     const zoom = map.getZoom();
-    console.log(zoom);
-
     if (zoom > 10) {
         map.setZoom(10); // Минимальный зум
     }
