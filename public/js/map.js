@@ -241,45 +241,124 @@ function init() {
     document.getElementById('reviews').click()
 }
 
+// function getOffices() {
+//     showLoader();
+//     let filters = document.querySelectorAll(".custom-checkbox");
+//     let filer_id = ''
+//     filters.forEach((filter) => {
+//         if (filter.checked) {
+//             filer_id += filter.dataset.filterid
+//         }
+
+//     })
+//     fetch(`http://localhost:3000/t2api/offices${filer_id}`)
+//     .then((response) => response.json())
+//     .then((data) => {
+//         console.log(data)
+//       if (data.meta?.status === 'OK') {
+//         data.data.forEach((location) => {
+//           var placemark = new ymaps.Placemark(
+//             [location.latitude, location.longitude],
+//             {
+//               balloonContentHeader: location.city,
+//               balloonContentBody: location.address,
+//               balloonContentFooter: `<b>Услуги:</b> ${location.services.map((s) => s.name).join(', ')}`,
+//             },
+//             {
+//               iconLayout: 'default#image',
+//               iconImageSize: [30, 30],
+//               iconImageOffset: [-15, -30],
+//             },
+//           );
+//           map.geoObjects.add(placemark);
+//         });
+//       }
+//       hideLoader();
+//     })
+//     .catch((error) => {
+//         console.error('Ошибка при получении данных: ', error)
+//         showToast('Ошибка при получении данных: ', "error")
+//     })
+// }
+
+let currentRoute = null;
+let currentActivePlacemark = null;
+
 function getOffices() {
     showLoader();
     let filters = document.querySelectorAll(".custom-checkbox");
-    let filer_id = ''
+    let filer_id = '';
     filters.forEach((filter) => {
         if (filter.checked) {
-            filer_id += filter.dataset.filterid
+            filer_id += filter.dataset.filterid;
         }
+    });
 
-    })
     fetch(`http://localhost:3000/t2api/offices${filer_id}`)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data)
-      if (data.meta?.status === 'OK') {
-        data.data.forEach((location) => {
-          var placemark = new ymaps.Placemark(
-            [location.latitude, location.longitude],
-            {
-              balloonContentHeader: location.city,
-              balloonContentBody: location.address,
-              balloonContentFooter: `<b>Услуги:</b> ${location.services.map((s) => s.name).join(', ')}`,
-            },
-            {
-              iconLayout: 'default#image',
-              iconImageSize: [30, 30],
-              iconImageOffset: [-15, -30],
-            },
-          );
-          map.geoObjects.add(placemark);
-        });
-      }
-      hideLoader();
+        console.log(data);
+        if (data.meta?.status === 'OK') {
+            data.data.forEach((location) => {
+                const defaultIcon = '/pictures/pin-unchosen.d47d1abd.svg';
+                const selectedIcon = '/pictures/pin-chosen.c894ed87.svg';
+
+                const placemark = new ymaps.Placemark(
+                    [location.latitude, location.longitude],
+                    {
+                        balloonContentHeader: location.city,
+                        balloonContentBody: location.address,
+                        balloonContentFooter: `<b>Услуги:</b> ${location.services.map((s) => s.name).join(', ')}`,
+                    },
+                    {
+                        iconLayout: 'default#image',
+                        iconImageSize: [20, 30],
+                        iconImageHref: defaultIcon,
+                        iconImageOffset: [-15, -30],
+                    }
+                );
+
+                placemark.events.add('click', function() {
+                    // Меняем иконку у предыдущей активной метки (если была)
+                    if (currentActivePlacemark) {
+                        currentActivePlacemark.options.set('iconImageHref', defaultIcon);
+                    }
+
+                    // Сохраняем текущую активную метку и меняем её иконку
+                    currentActivePlacemark = placemark;
+                    placemark.options.set('iconImageHref', selectedIcon);
+
+                    // Получаем координаты пользователя
+                    ymaps.geolocation.get().then(function(result) {
+                        const userCoordinates = result.geoObjects.get(0).geometry.getCoordinates();
+
+                        if (currentRoute) {
+                            map.geoObjects.remove(currentRoute);
+                        }
+
+                        ymaps.route([userCoordinates, [location.latitude, location.longitude]]).then(function(route) {
+                            route.getWayPoints().options.set('visible', false);
+                            map.geoObjects.add(route);
+                            currentRoute = route;
+                        }, function(error) {
+                            console.error('Ошибка при построении маршрута:', error);
+                        });
+                    });
+                });
+
+                map.geoObjects.add(placemark);
+            });
+        }
+        hideLoader();
     })
     .catch((error) => {
-        console.error('Ошибка при получении данных: ', error)
-        showToast('Ошибка при получении данных: ', "error")
-    })
+        console.error('Ошибка при получении данных: ', error);
+        showToast('Ошибка при получении данных: ', "error");
+    });
 }
+
+
+
 
 // Добавьте эту кнопку в ваш интерфейс (например, рядом с кнопкой "Добавить отзыв")
 const openOfficesModalBtn = document.createElement('button');
