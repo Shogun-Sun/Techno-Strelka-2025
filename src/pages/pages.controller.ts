@@ -15,7 +15,7 @@ export class PagesController {
   }
 
   @ApiOperation({ summary: 'Главная страница' })
-  @Get('map')
+  @Get('/')
   map(@Res() res: Response) {
     res.sendFile(this.pagePath('map.html'));
   }
