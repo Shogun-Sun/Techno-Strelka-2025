@@ -8,25 +8,30 @@ export class ChatBotService {
   private genAI: GoogleGenerativeAI;
 
   constructor() {
+    // Инициализация клиента Gemini
     this.genAI = new GoogleGenerativeAI(
       'AIzaSyDZL52wL1kzmUzzzv0mmQaddCpjs0Z7fYM',
     );
   }
-  //AIzaSyCdXUJWzg2ejDtknJHUug3oGgPM2JE5Nvg
 
+  // Метод для обращения к API Gemini и получения ответа
   async accessGeminiApi(
     prompt: DialogPromptDto,
   ): Promise<{ message: string; redirect?: string }> {
+    //Добавление контекста к сообщению
     const fullPrompt = `${CONTEXT} ${prompt.prompt}`;
 
     try {
       const model = this.genAI.getGenerativeModel({
-        model: 'gemini-1.5-flash-8b',
+        model: 'gemini-1.5-pro',
       });
-      const result = await model.generateContent(fullPrompt);
-      const response = await result.response;
-      let text = response.text();
 
+      // Отправка запроса к модели и получение ответа
+      const result = await model.generateContent(fullPrompt);
+      const response = result.response;
+      const text = response.text();
+
+      // Проверка на наличие фразы, по которой нужно выполнить редирект
       const redirectPhrase = 'личный кабинет';
       if (text.includes(redirectPhrase)) {
         return { message: text, redirect: 'редирект' };
