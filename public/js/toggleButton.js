@@ -1,34 +1,32 @@
-const coverageRadio = document.getElementById('coverage');
-const reviewsRadio = document.getElementById('reviews');
-const navIndicator = document.getElementById('navIndicator');
+document.addEventListener('DOMContentLoaded', function() {
+    const navContainer = document.getElementById('navContainer');
+    const navItems = document.querySelectorAll('.nav-item');
+    const navIndicator = document.getElementById('navIndicator');
+    const navSwitches = document.querySelectorAll('input[name="navSwitch"]');
 
-function updateIndicator(){
-    if(document.documentElement.clientWidth > 648){
-        navIndicator.classList.remove('left-1')
-        navIndicator.classList.remove('right-1')
-        if(coverageRadio.checked){
-            navIndicator.classList.remove('right-4');
-            navIndicator.classList.add('left-4');   
-        }
-        if(reviewsRadio.checked){
-            navIndicator.classList.remove('left-4');
-            navIndicator.classList.add('right-4');
-        }
-    } else{
-        navIndicator.classList.remove('left-4')
-        navIndicator.classList.remove('right-4')
-        if(coverageRadio.checked){
-            navIndicator.classList.remove('right-1');
-            navIndicator.classList.add('left-1');   
-        }
-        if(reviewsRadio.checked){
-            navIndicator.classList.remove('left-1');
-            navIndicator.classList.add('right-1');
-        } 
+    function updateIndicator() {
+        const activeItem = document.querySelector('.nav-item input:checked').parentElement;
+        const itemRect = activeItem.getBoundingClientRect();
+        const containerRect = navContainer.getBoundingClientRect();
+        
+        // Вычисляем смещение относительно контейнера
+        const offset = itemRect.left - containerRect.left;
+        
+        // Устанавливаем ширину индикатора равной ширине активного элемента
+        navIndicator.style.width = `${itemRect.width}px`;
+        
+        // Применяем смещение
+        navIndicator.style.transform = `translateX(${offset}px)`;
     }
-}
 
-coverageRadio.addEventListener('change', updateIndicator);
-reviewsRadio.addEventListener('change', updateIndicator);
-document.addEventListener('DOMContentLoaded', updateIndicator)
-window.addEventListener('resize', updateIndicator)
+    // Инициализация
+    updateIndicator();
+
+    // Обработчики событий
+    navSwitches.forEach(switchEl => {
+        switchEl.addEventListener('change', updateIndicator);
+    });
+
+    // Обновляем при изменении размера окна
+    window.addEventListener('resize', updateIndicator);
+});
