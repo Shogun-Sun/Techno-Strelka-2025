@@ -132,7 +132,14 @@ function init() {
                 clusterBalloonPagerVisible: true, // Показываем пагинатор
                 
                 // Настройки иконок кластера
-                clusterIconLayout: 'default#pieChart',
+                clusterIcons: [
+                    {
+                        href: '/pictures/messages.png',
+                        size: [40, 40],
+                        offset: [-20, -20]
+                    },
+                ],
+                clusterIconContentLayout: null,
                 clusterIconPieChartRadius: 25,
                 clusterIconPieChartCoreRadius: 10,
                 clusterIconPieChartStrokeWidth: 3,
@@ -141,15 +148,7 @@ function init() {
                 groupByCoordinates: false,
                 gridSize: 64,
                 clusterMinClusterSize: 2
-            }),
-            getPointData = function (index) {
-                return {
-                    balloonContentHeader: '<font size=3><b><a target="_blank" href="https://yandex.ru">Здесь может быть ваша ссылка</a></b></font>',
-                    balloonContentBody: '<p>Ваше имя: <input name="login"></p><p>Телефон в формате 2xxx-xxx:  <input></p><p><input type="submit" value="Отправить"></p>',
-                    balloonContentFooter: '<font size=1>Информация предоставлена: </font> балуном <strong>метки ' + index + '</strong>',
-                    clusterCaption: 'метка <strong>' + index + '</strong>'
-                };
-            };
+            })
     
             // Массив для хранения меток
             const placemarks = [];
@@ -165,7 +164,7 @@ function init() {
                     },
                     {
                         iconLayout: 'default#image',
-                        iconImageHref: '/pictures/mobile-map.png',
+                        iconImageHref: '/pictures/comment.png',
                         iconImageSize: [30, 30],
                         iconImageOffset: [-15, -15]
                     }
@@ -353,7 +352,7 @@ submitReview.addEventListener('click', async () => {
         })
     }, {
         iconLayout: 'default#image',
-        iconImageHref: '/pictures/mobile-map.png',
+        iconImageHref: '/pictures/comment.png',
     });
 
     map.geoObjects.add(reviewPlacemark);
