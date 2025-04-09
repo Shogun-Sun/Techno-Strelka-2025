@@ -124,6 +124,7 @@ function init() {
     })
 
     function getReviews() {
+        map.events.remove('boundschange', zoomControl); 
         fetch("/reviews/get/all/reviews", {
             method: "GET",
             headers: {
@@ -561,56 +562,6 @@ function hideLoader() {
 
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const userResponse = await fetch("/user/profile", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
-    let userData = await userResponse.json()
-    console.log(userData);
-    if (userData.error) {
-        user_id = null
-        user_telephone = null
-        return;
-    }
-    document.getElementById("login").innerText = "Выйти"
-    document.getElementById("login").onclick = () => {
-        fetch("/user/logout", {
-            method:"Get",
-            headers:{
-                "Content-Type": "application/json",
-            },
-        })
-        .then(res=> res.json())
-        .then((userOutMessage) => {
-            document.getElementById("login").innerText = "Войти"
-            document.getElementById("login").onclick = () => {window.location.href = "/loginPage"}
-            showToast(userOutMessage.message, "success")
-        })
-    }
-    user_id = userData.user.user_id;
-    user_telephone = userData.user.user_telephone;
-    document.querySelector("#phoneNumberComment").textContent = user_telephone;
-    
-    
-
-    function appendBotMessage(text) {
-        let iframeDoc = document.querySelector("iframe").contentWindow.document;
-        let chat = iframeDoc.querySelector("#chat")
-        console.log(chat)
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'flex justify-start mb-4';
-        messageDiv.innerHTML = `
-          <div class="bg-gray-100 text-black rounded-xl px-4 py-2 max-w-xs md:max-w-md">
-            <p class="font-medium font-Halvar">Tele2Bot</p>
-            <p class="font-Rooftop">${text}</p>
-          </div>
-        `;
-        chat.appendChild(messageDiv);
-        chat.scrollTop = chat.scrollHeight;
-      }
-
     ymaps.ready(() => {
         // Проверяем, поддерживает ли браузер геолокацию
         if (navigator.geolocation) {
@@ -682,5 +633,54 @@ document.addEventListener("DOMContentLoaded", async () => {
           showToast('Геолокация не поддерживается этим браузером.', "error");
         }
       });
+    const userResponse = await fetch("/user/profile", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    let userData = await userResponse.json()
+    console.log(userData);
+    if (userData.error) {
+        user_id = null
+        user_telephone = null
+        return;
+    }
+    document.getElementById("login").innerText = "Выйти"
+    document.getElementById("login").onclick = () => {
+        fetch("/user/logout", {
+            method:"Get",
+            headers:{
+                "Content-Type": "application/json",
+            },
+        })
+        .then(res=> res.json())
+        .then((userOutMessage) => {
+            document.getElementById("login").innerText = "Войти"
+            document.getElementById("login").onclick = () => {window.location.href = "/loginPage"}
+            showToast(userOutMessage.message, "success")
+        })
+    }
+    user_id = userData.user.user_id;
+    user_telephone = userData.user.user_telephone;
+    document.querySelector("#phoneNumberComment").textContent = user_telephone;
+    
+    
+
+    function appendBotMessage(text) {
+        let iframeDoc = document.querySelector("iframe").contentWindow.document;
+        let chat = iframeDoc.querySelector("#chat")
+        console.log(chat)
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'flex justify-start mb-4';
+        messageDiv.innerHTML = `
+          <div class="bg-gray-100 text-black rounded-xl px-4 py-2 max-w-xs md:max-w-md">
+            <p class="font-medium font-Halvar">Tele2Bot</p>
+            <p class="font-Rooftop">${text}</p>
+          </div>
+        `;
+        chat.appendChild(messageDiv);
+        chat.scrollTop = chat.scrollHeight;
+      }
 
 })
