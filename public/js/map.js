@@ -50,6 +50,28 @@ function hideLoader() {
     document.getElementById('loader').classList.add('hidden');
 }
 
+function addSelfpoint() {
+    ymaps.geolocation.get({
+        provider: 'browser',
+        mapStateAutoApply: true
+    }).then(function (result) {
+        userLocation = result.geoObjects.get(0).geometry.getCoordinates();
+        map.setCenter(userlocationConst, 15);
+
+        userPlacemark = new ymaps.Placemark(userlocationConst, {
+            hintContent: 'Ваше местоположение',
+        },
+        {
+            iconLayout: 'default#image',
+            iconImageHref: '/pictures/placeholder.png',
+        });
+        map.geoObjects.add(userPlacemark);
+    }).catch(function (error) {
+        console.error("Ошибка при определении местоположения:", error);
+        showToast("Не удалось определить ваше местоположение. Убедитесь, что геолокация включена.", "error");
+    });
+}
+
 // Инициализация карты
 ymaps.ready(init);
 function init() {
@@ -66,27 +88,7 @@ function init() {
     }
 
     // Определение местоположения пользователя
-    function addSelfpoint() {
-        ymaps.geolocation.get({
-            provider: 'browser',
-            mapStateAutoApply: true
-        }).then(function (result) {
-            userLocation = result.geoObjects.get(0).geometry.getCoordinates();
-            map.setCenter(userlocationConst, 15);
-
-            userPlacemark = new ymaps.Placemark(userlocationConst, {
-                hintContent: 'Ваше местоположение',
-            },
-            {
-                iconLayout: 'default#image',
-                iconImageHref: '/pictures/placeholder.png',
-            });
-            map.geoObjects.add(userPlacemark);
-        }).catch(function (error) {
-            console.error("Ошибка при определении местоположения:", error);
-            showToast("Не удалось определить ваше местоположение. Убедитесь, что геолокация включена.", "error");
-        });
-    }
+    
 
     // открытие вкладки с покрытием сети 
     coverage.addEventListener("change", () => {
@@ -461,11 +463,13 @@ clear_filter.addEventListener("click", () => {
         box.checked = false;
     })
     closeOfficesModalBtn.click()
+    addSelfpoint()
     getOffices()
 })
 
 applyOfficeFilters.addEventListener("click", () => {
     closeOfficesModalBtn.click()
+    addSelfpoint()
     getOffices()
 })
 
