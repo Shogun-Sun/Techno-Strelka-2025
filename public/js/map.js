@@ -343,14 +343,16 @@ function getOffices() {
         clusterBalloonContentLayoutHeight: 200,
         clusterBalloonPagerSize: 5
     });
-
     fetch(`http://localhost:3000/t2api/offices${filer_id}`)
     .then((response) => response.json())
     .then((data) => {
-        if (data.meta?.status === 'OK') {
+        let info = []
+        if (data.data) {
+            info = data.data
+        } else {info = data}
             const placemarks = [];
             
-            data.data.forEach((location) => {
+            info.forEach((location) => {
                 const defaultIcon = '/pictures/pin-unchosen.d47d1abd.svg';
                 const selectedIcon = '/pictures/pin-chosen.c894ed87.svg';
 
@@ -410,7 +412,7 @@ function getOffices() {
                     zoomMargin: 50
                 });
             }
-        }
+        // } }
         hideLoader();
     })
     .catch((error) => {
