@@ -4,6 +4,7 @@ import { showToast } from "./toasts.js";
 let user_id;
 let user_telephone;
 let map;
+let userlocationConst = [56.33744162743266,43.963299417519025]
 let userLocation = null;
 let userPlacemark = null;
 var layers = {};
@@ -71,9 +72,9 @@ function init() {
             mapStateAutoApply: true
         }).then(function (result) {
             userLocation = result.geoObjects.get(0).geometry.getCoordinates();
-            map.setCenter(userLocation, 15);
+            map.setCenter(userlocationConst, 15);
 
-            userPlacemark = new ymaps.Placemark(userLocation, {
+            userPlacemark = new ymaps.Placemark(userlocationConst, {
                 hintContent: 'Ваше местоположение',
             },
             {
@@ -389,7 +390,7 @@ function getOffices() {
                             map.geoObjects.remove(currentRoute);
                         }
 
-                        ymaps.route([userCoordinates, [location.latitude, location.longitude]]).then(function(route) {
+                        ymaps.route([userlocationConst, [location.latitude, location.longitude]]).then(function(route) {
                             route.getWayPoints().options.set('visible', false);
                             map.geoObjects.add(route);
                             currentRoute = route;
@@ -566,7 +567,7 @@ submitReview.addEventListener('click', async () => {
 
     // Создаем метку с отзывом на карте
     if (reviews.checked) {
-        const reviewPlacemark = new ymaps.Placemark(userLocation, {
+        const reviewPlacemark = new ymaps.Placemark(userlocationConst, {
             hintContent: 'Комментарий пользователя',
             balloonContent: window.balloonContent_template({
                 "review_text": review,
@@ -597,8 +598,8 @@ submitReview.addEventListener('click', async () => {
             user_id: user_id,
             review_text: review,
             coordinates: {
-                lat: userLocation[0],
-                lng: userLocation[1]
+                lat: userlocationConst[0],
+                lng: userlocationConst[1]
             },
             review_speed_test: {
                 "download":downloadEl.innerText,
