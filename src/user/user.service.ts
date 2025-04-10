@@ -26,8 +26,8 @@ export class UserService {
       }
 
       //Хеширование пароля
-      // const hashedPassword = await bcrypt.hash(newUserDto.user_password, 10);
-      // newUserDto.user_password = hashedPassword;
+      const hashedPassword = await bcrypt.hash(newUserDto.user_password, 10);
+      newUserDto.user_password = hashedPassword;
 
       await this.userModel.create(newUserDto as Partial<User>);
       return { message: 'Вы успешно заригестрировались' };
@@ -47,7 +47,7 @@ export class UserService {
       throw new BadRequestException('Пользователь не найден');
     }
 
-    const isMatch = user_password === user.user_password;
+    const isMatch = await bcrypt.compare(user_password, user.user_password);
     if (!isMatch) {
       throw new BadRequestException('Неверный пароль');
     }
