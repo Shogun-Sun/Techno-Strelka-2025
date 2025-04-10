@@ -1,31 +1,71 @@
 import { showToast } from "./toasts.js";
 
+//глобальные переменные
 let user_id;
 let user_telephone;
 let map;
-let userLocation = null; // Изначально null
+let userLocation = null;
 let userPlacemark = null;
+var layers = {};
+let currentRoute = null;
+let currentActivePlacemark = null;
+//глобальные переменные
 
+//инициализация шаблонов
 const balloonContent_template = document.getElementById("balloonContent_template").innerHTML;
 window.balloonContent_template = Handlebars.compile(balloonContent_template);
+//инициализация шаблонов
 
+//переменные Dom дерева
 const coverage = document.getElementById('coverage');
 const reviews = document.getElementById('reviews');
 const offices = document.getElementById('offices');
+const open_chat = document.querySelector("#openChat");
+const chat_area = document.querySelector("#chatArea");
 
+
+// Элементы интерфейса
+const addReviewBtn = document.getElementById('addReviewBtn');
+const reviewModal = document.getElementById('reviewModal');
+const closeModal = document.getElementById('closeModal');
+const submitReview = document.getElementById('submitReview');
+const reviewText = document.getElementById('reviewText');
+
+//Элементы интерфейса
+const downloadEl = document.getElementById('download-speed');
+const uploadEl = document.getElementById('upload-speed');
+const pingEl = document.getElementById('ping');
+//переменные Dom дерева
+
+// Функция для отображения загрузчика
+function showLoader() {
+    document.getElementById('loader').classList.remove('hidden');
+    document.getElementById('loader').classList.add('flex');
+}
+
+// Функция для скрытия загрузчика
+function hideLoader() {
+    document.getElementById('loader').classList.remove('flex');
+    document.getElementById('loader').classList.add('hidden');
+}
 
 // Инициализация карты
 ymaps.ready(init);
-var layers = {};
-
 function init() {
     map = new ymaps.Map("map", {
         center: [55.751574, 37.573856], // Москва по умолчанию
         zoom: 12
     });
 
+    function zoomControl() {
+        const zoom = map.getZoom();
+        if (zoom > 10) {
+            map.setZoom(10); // Минимальный зум
+        }
+    }
+
+    // Определение местоположения пользователя
     function addSelfpoint() {
-        // Определение местоположения пользователя
         ymaps.geolocation.get({
             provider: 'browser',
             mapStateAutoApply: true
@@ -33,15 +73,12 @@ function init() {
             userLocation = result.geoObjects.get(0).geometry.getCoordinates();
             map.setCenter(userLocation, 15);
 
-            // Добавляем метку пользователя
             userPlacemark = new ymaps.Placemark(userLocation, {
                 hintContent: 'Ваше местоположение',
-                // balloonContent: 'Это красивая метка',
             },
             {
                 iconLayout: 'default#image',
                 iconImageHref: '/pictures/placeholder.png',
-                // iconImageSize: [30, 42],
             });
             map.geoObjects.add(userPlacemark);
         }).catch(function (error) {
@@ -50,6 +87,7 @@ function init() {
         });
     }
 
+    // открытие вкладки с покрытием сети 
     coverage.addEventListener("change", () => {
         if (coverage.checked) {
             document.getElementById('filt_cover').classList.remove('lg:hidden');
@@ -96,6 +134,33 @@ function init() {
             map.layers.add(layers[key]);
         }
 
+        //изменение отображения слоев покрытия сети
+        function toggleLayer() {
+            if (document.getElementById("checkbox_2g").checked) {
+                map.layers.add(layers["2g"]);
+            } else {
+                map.layers.remove(layers["2g"]);
+            }
+        
+            if (document.getElementById("checkbox_3g").checked) {
+                map.layers.add(layers["3g"]);
+            } else {
+                map.layers.remove(layers["3g"]);
+            }
+        
+            if (document.getElementById("checkbox_4g").checked) {
+                map.layers.add(layers["4g"]);
+            } else {
+                map.layers.remove(layers["4g"]);
+            }
+        
+            if (document.getElementById("checkbox_lte450").checked) {
+                map.layers.add(layers["lte450"]);
+            } else {
+                map.layers.remove(layers["lte450"]);
+            }
+        }
+
         // Обработчик изменений в чекбоксах
         document.getElementById("checkbox_2g").addEventListener("change", toggleLayer);
         document.getElementById("checkbox_3g").addEventListener("change", toggleLayer);
@@ -106,10 +171,11 @@ function init() {
         document.querySelector(".checkbox_3g_modal").addEventListener("change", toggleLayer);
         document.querySelector(".checkbox_4g_modal").addEventListener("change", toggleLayer);
         document.querySelector(".checkbox_lte450_modal").addEventListener("change", toggleLayer);
+        // Обработчик изменений в чекбоксах
     }    
 
+    // открытие вкладки с отзывами
     reviews.addEventListener("change", () => {
-        console.log(reviews.checked)
         if (reviews.checked) {
             for (var key in layers) {
                 map.layers.remove(layers[key]);
@@ -140,7 +206,6 @@ function init() {
                 clusterDisableClickZoom: true,
                 clusterOpenBalloonOnClick: true,
                 clusterBalloonContentLayout: 'cluster#balloonCarousel', // Используем карусель
-                // clusterBalloonItemContentLayout: 'balloonContent_template', // Используем наш шаблон
                 clusterBalloonPanelMaxMapArea: 0, // Не ограничиваем область карты
                 clusterBalloonContentLayoutWidth: 300, // Ширина балуна
                 clusterBalloonContentLayoutHeight: 200, // Высота балуна
@@ -175,7 +240,6 @@ function init() {
                     {
                         hintContent: `Комментарий пользователя ${review.user.user_telephone}`,
                         balloonContent: window.balloonContent_template(review),
-                        // Добавляем все данные отзыва в свойства метки
                         reviewData: review
                     },
                     {
@@ -189,7 +253,6 @@ function init() {
                 placemarks.push(reviewPlacemark);
             });
             
-            console.log(reviewsData)
             // Добавляем метки в кластеризатор
             clusterer.add(placemarks);
             
@@ -221,9 +284,9 @@ function init() {
         });
     }
 
+    // открытие вкладки с офисами
     offices.addEventListener("change", () => {
         showLoader()
-        console.log(document.getElementById("loader"))
         document.getElementById("loader").classList.remove("hidden")
         if (offices.checked) {
             for (var key in layers) {
@@ -241,49 +304,6 @@ function init() {
 
     document.getElementById('reviews').click()
 }
-
-// function getOffices() {
-//     showLoader();
-//     let filters = document.querySelectorAll(".custom-checkbox");
-//     let filer_id = ''
-//     filters.forEach((filter) => {
-//         if (filter.checked) {
-//             filer_id += filter.dataset.filterid
-//         }
-
-//     })
-//     fetch(`http://localhost:3000/t2api/offices${filer_id}`)
-//     .then((response) => response.json())
-//     .then((data) => {
-//         console.log(data)
-//       if (data.meta?.status === 'OK') {
-//         data.data.forEach((location) => {
-//           var placemark = new ymaps.Placemark(
-//             [location.latitude, location.longitude],
-//             {
-//               balloonContentHeader: location.city,
-//               balloonContentBody: location.address,
-//               balloonContentFooter: `<b>Услуги:</b> ${location.services.map((s) => s.name).join(', ')}`,
-//             },
-//             {
-//               iconLayout: 'default#image',
-//               iconImageSize: [30, 30],
-//               iconImageOffset: [-15, -30],
-//             },
-//           );
-//           map.geoObjects.add(placemark);
-//         });
-//       }
-//       hideLoader();
-//     })
-//     .catch((error) => {
-//         console.error('Ошибка при получении данных: ', error)
-//         showToast('Ошибка при получении данных: ', "error")
-//     })
-// }
-
-let currentRoute = null;
-let currentActivePlacemark = null;
 
 function getOffices() {
     showLoader();
@@ -327,7 +347,6 @@ function getOffices() {
     fetch(`http://localhost:3000/t2api/offices${filer_id}`)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
         if (data.meta?.status === 'OK') {
             const placemarks = [];
             
@@ -381,9 +400,7 @@ function getOffices() {
                 placemarks.push(placemark);
             });
 
-            // Добавляем метки в кластеризатор
             clusterer.add(placemarks);
-            // Добавляем кластеризатор на карту
             map.geoObjects.add(clusterer);
             
             // Автоматически подбираем оптимальный масштаб для показа всех объектов
@@ -406,7 +423,7 @@ function getOffices() {
 
 
 
-// Добавьте эту кнопку в ваш интерфейс (например, рядом с кнопкой "Добавить отзыв")
+// Добавление кнопки фильтра офисов
 const openOfficesModalBtn = document.createElement('button');
 openOfficesModalBtn.id = 'openOfficesModalBtn';
 openOfficesModalBtn.className = 'bg-black text-lg text-white px-3 py-2 lg:px-6 lg:py-2 rounded-xl shadow-lg hover:bg-gray-950 transition-colors duration-300 \
@@ -421,7 +438,7 @@ const applyOfficeFiltersBtn = document.getElementById('applyOfficeFilters');
 const clear_filter = document.getElementById('clear_filter');
 const applyOfficeFilters = document.getElementById('applyOfficeFilters');
 
-
+//управление модальным окном офисов
 openOfficesModalBtn.addEventListener('click', () => {
     officesModal.classList.remove('hidden');
     setTimeout(() => {
@@ -449,81 +466,27 @@ applyOfficeFilters.addEventListener("click", () => {
     getOffices()
 })
 
-
 applyOfficeFiltersBtn.addEventListener('click', () => {
-    // Здесь будет логика применения фильтров
     officesModal.classList.remove('flex');
     setTimeout(() => {
         officesModal.classList.add('hidden');
     }, 10);
-    
-    // Показываем уведомление об успешном применении фильтров
     showToast('Фильтры офисов применены', 'success');
 });
+//управление модальным окном офисов
 
-function toggleLayer() {
-    if (document.getElementById("checkbox_2g").checked) {
-        map.layers.add(layers["2g"]);
-    } else {
-        map.layers.remove(layers["2g"]);
-    }
-
-    if (document.getElementById("checkbox_3g").checked) {
-        map.layers.add(layers["3g"]);
-    } else {
-        map.layers.remove(layers["3g"]);
-    }
-
-    if (document.getElementById("checkbox_4g").checked) {
-        map.layers.add(layers["4g"]);
-    } else {
-        map.layers.remove(layers["4g"]);
-    }
-
-    if (document.getElementById("checkbox_lte450").checked) {
-        map.layers.add(layers["lte450"]);
-    } else {
-        map.layers.remove(layers["lte450"]);
-    }
-}
-
-function zoomControl() {
-    const zoom = map.getZoom();
-    if (zoom > 10) {
-        map.setZoom(10); // Минимальный зум
-    }
-}
-
-const open_chat = document.querySelector("#openChat");
-const chat_area = document.querySelector("#chatArea");
-
-// Инициализация - скрываем чат полностью за пределами экрана
+//отображение чата с ИИ
 chat_area.classList.add("translate-x-full");
 
 open_chat.addEventListener("click", () => {
-    // Переключение видимости чата
     chat_area.classList.toggle("translate-x-full");
     chat_area.classList.toggle("translate-x-0");
-    
-    // Анимация кнопки
     open_chat.classList.toggle('-left-7.5');
     open_chat.classList.toggle('-left-15');
     open_chat.innerText = open_chat.innerText == "<" ? ">" : "<";
 });
 
-// Элементы интерфейса
-const addReviewBtn = document.getElementById('addReviewBtn');
-const reviewModal = document.getElementById('reviewModal');
-const closeModal = document.getElementById('closeModal');
-const submitReview = document.getElementById('submitReview');
-const reviewText = document.getElementById('reviewText');
-
-const startButton = document.getElementById("startTest");
-const resultsDiv = document.getElementById('results');
-const downloadEl = document.getElementById('download-speed');
-const uploadEl = document.getElementById('upload-speed');
-const pingEl = document.getElementById('ping');
-  
+//тест на качество интернета
 document.getElementById('startTest').addEventListener('click', function() {
     startSpeedTest();
   });
@@ -537,7 +500,6 @@ async function startSpeedTest() {
         await fetch('https://httpbin.org/get', {cache: 'no-store'});
         const pingEnd = performance.now();
         result.ping = Math.round(pingEnd - pingStart);
-        console.log(result)
         
         // Тест загрузки (download)
         const downloadStart = performance.now();
@@ -546,7 +508,7 @@ async function startSpeedTest() {
         const downloadEnd = performance.now();
         const downloadSpeed = (downloadSize * 8 / (downloadEnd - downloadStart) / 1000).toFixed(2);
         result.download = downloadSpeed;
-        console.log(result)
+
         // Тест отдачи (upload) - упрощенный
         const uploadStart = performance.now();
         const uploadSize = 1 * 1024 * 1024 ; // 1MB данных
@@ -558,16 +520,12 @@ async function startSpeedTest() {
         const uploadEnd = performance.now();
         const uploadSpeed = (uploadSize * 8 / (uploadEnd - uploadStart) / 1000).toFixed(2);
         result.upload = uploadSpeed;
-        console.log(result)
 
         document.querySelector("#startTest").innerText = "Пройти еще раз"
         document.querySelector("#download-speed").innerText = result.download;
         document.querySelector("#upload-speed").innerText = result.upload;
         document.querySelector("#ping").innerText = result.ping;
         document.querySelector("#results").classList.remove("hidden")
-        
-
-
 
       }
 
@@ -575,8 +533,6 @@ startTest.addEventListener("click", () => {
     showToast('Тест скорости начат...', 'info');
 })
 
-
-// Открытие модального окна
 addReviewBtn.addEventListener('click', () => {
     if (user_id) {
         reviewModal.classList.remove('hidden');
@@ -587,7 +543,6 @@ addReviewBtn.addEventListener('click', () => {
     
 });
 
-// Закрытие модального окна
 closeModal.addEventListener('click', () => {
     reviewModal.classList.add('hidden');
     reviewModal.classList.remove('flex');
@@ -631,20 +586,6 @@ submitReview.addEventListener('click', async () => {
         reviewPlacemark.balloon.open();
     
     }
-    
-    // Здесь должна быть реальная отправка данных на сервер
-    console.log('Отправка отзыва:', {
-        phone: user_telephone,
-        review: review,
-        coordinates: userLocation,
-        review_speed_test: {
-            "download":downloadEl.innerText,
-            "upload":uploadEl.innerText,
-            "ping":pingEl.innerText,
-        }
-    });
-
-
     const Response = await fetch("/reviews/create", {
         method: "POST",
         headers: {
@@ -674,19 +615,6 @@ submitReview.addEventListener('click', async () => {
     reviewText.value = '';
 });
 
-// Функция для отображения загрузчика
-function showLoader() {
-    document.getElementById('loader').classList.remove('hidden');
-    document.getElementById('loader').classList.add('flex');
-}
-
-// Функция для скрытия загрузчика
-function hideLoader() {
-    document.getElementById('loader').classList.remove('flex');
-    document.getElementById('loader').classList.add('hidden');
-}
-
-
 document.addEventListener("DOMContentLoaded", async () => {
     ymaps.ready(() => {
         // Проверяем, поддерживает ли браузер геолокацию
@@ -713,7 +641,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
                   });
 
-                  // Сообщение
+                  // Сообщение о событии связанным с t2
                   fetch('http://localhost:3000/chips/get', {
                     method: 'POST',
                     headers: {
@@ -734,11 +662,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                     appendBotMessage(data.chip_description)
                     document.querySelector("#openChat").click()
                   })
-                  .catch(error => console.log(error.message));
+                  .catch(error => {
+                    console.error(error)
+                    showToast(error.message, "error")
+                });
                   
                   
-                } else {
-                //   alert('Не удалось найти район.');
                 }
               } catch (err) {
                 console.error('Ошибка при получении данных геокодирования:', err);
@@ -766,7 +695,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     })
     let userData = await userResponse.json()
-    console.log(userData);
     if (userData.error) {
         user_id = null
         user_telephone = null
@@ -791,12 +719,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     user_telephone = userData.user.user_telephone;
     document.querySelector("#phoneNumberComment").textContent = user_telephone;
     
-    
-
     function appendBotMessage(text) {
         let iframeDoc = document.querySelector("iframe").contentWindow.document;
         let chat = iframeDoc.querySelector("#chat")
-        console.log(chat)
         const messageDiv = document.createElement('div');
         messageDiv.className = 'flex justify-start mb-4';
         messageDiv.innerHTML = `
